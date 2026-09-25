@@ -83,9 +83,20 @@ class FormController extends Controller
         // Logika Upload File
         if ($request->hasFile('attachment')) {
             $file = $request->file('attachment');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('dokumentasi', $filename, 'public');
-            $formData['attachment_path'] = 'storage/' . $path;
+            
+            if (env('CLOUDINARY_URL')) {
+                // Gunakan Cloudinary jika CLOUDINARY_URL tersedia di .env
+                $uploadedFileUrl = cloudinary()->upload($file->getRealPath(), [
+                    'folder' => 'dokumentasi',
+                    'resource_type' => 'auto'
+                ])->getSecurePath();
+                $formData['attachment_path'] = $uploadedFileUrl;
+            } else {
+                // Fallback ke penyimpanan lokal
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('dokumentasi', $filename, 'public');
+                $formData['attachment_path'] = 'storage/' . $path;
+            }
         }
 
         Submission::create([
