@@ -613,6 +613,13 @@
             if (sigPadSupervisor) document.getElementById('input-supervisor').value = sigPadSupervisor.toDataURL('image/png');
             if (sigPadProvider && !sigPadProvider.isEmpty()) document.getElementById('input-provider').value = sigPadProvider.toDataURL('image/png');
             if (sigPadCommittee && !sigPadCommittee.isEmpty()) document.getElementById('input-committee').value = sigPadCommittee.toDataURL('image/png');
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = 'Menyimpan...';
+                submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+            }
         });
     });
 
