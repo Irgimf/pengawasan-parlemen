@@ -85,11 +85,9 @@ class FormController extends Controller
             $file = $request->file('attachment');
             
             if (env('CLOUDINARY_URL')) {
-                // Gunakan Cloudinary jika CLOUDINARY_URL tersedia di .env
-                $uploadedFileUrl = cloudinary()->upload($file->getRealPath(), [
-                    'folder' => 'dokumentasi',
-                    'resource_type' => 'auto'
-                ])->getSecurePath();
+                // Gunakan Cloudinary disk secara native (V3)
+                $path = $file->store('dokumentasi', 'cloudinary');
+                $uploadedFileUrl = \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($path);
                 $formData['attachment_path'] = $uploadedFileUrl;
             } else {
                 // Fallback ke penyimpanan lokal
