@@ -276,17 +276,19 @@
                                     $d_status = $submission->form_data['q_'.$index.'_dynamic_'.$d.'_status'] ?? '';
                                     $d_catatan = $submission->form_data['q_'.$index.'_dynamic_'.$d.'_catatan'] ?? '';
                                 @endphp
-                                <tr>
-                                    <td></td>
-                                    <td>- Item: {{ $d_item }}<br>  Qty: {{ $d_qty }}<br>  Spek: {{ $d_spek }}</td>
-                                    <td class="text-center">{{ $d_aktual }}</td>
-                                    <td class="text-center check-box" style="font-weight: normal;">
-                                        [{{ $d_status == 'S' ? 'X' : ' ' }}] S <br>
-                                        [{{ $d_status == 'TS' ? 'X' : ' ' }}] TS <br>
-                                        [{{ $d_status == 'N/A' ? 'X' : ' ' }}] N/A
-                                    </td>
-                                    <td>{{ $d_catatan }}</td>
-                                </tr>
+                                @if($d_item !== '' || $d_qty !== '' || $d_spek !== '' || $d_status !== '')
+                                    <tr>
+                                        <td></td>
+                                        <td>- Item: {{ $d_item }}<br>  Qty: {{ $d_qty }}<br>  Spek: {{ $d_spek }}</td>
+                                        <td class="text-center">{{ $d_aktual }}</td>
+                                        <td class="text-center check-box" style="font-weight: normal;">
+                                            [{{ $d_status == 'S' ? 'X' : ' ' }}] S <br>
+                                            [{{ $d_status == 'TS' ? 'X' : ' ' }}] TS <br>
+                                            [{{ $d_status == 'N/A' ? 'X' : ' ' }}] N/A
+                                        </td>
+                                        <td>{{ $d_catatan }}</td>
+                                    </tr>
+                                @endif
                             @endfor
                         @else
                             <tr>
