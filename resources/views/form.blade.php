@@ -733,4 +733,34 @@
     }
 </script>
 @endpush
+
 @endsection
+
+@push('scripts')
+<script>
+    function handleFileSelect(input, otherInputName) {
+        const container = input.closest('.mt-2');
+        const previewContainer = container.querySelector('.file-preview-container');
+        const nameLabel = container.querySelector('.file-name-label');
+        const otherInput = container.querySelector(`input[name="${otherInputName}"]`);
+        
+        if (input.files && input.files.length > 0) {
+            nameLabel.textContent = input.files[0].name;
+            previewContainer.classList.remove('hidden');
+            if(otherInput) otherInput.value = ''; 
+        } else {
+            previewContainer.classList.add('hidden');
+        }
+    }
+
+    function clearFileSelection(btn) {
+        const container = btn.closest('.mt-2');
+        const inputs = container.querySelectorAll('.file-upload-input');
+        inputs.forEach(input => input.value = '');
+        
+        const previewContainer = container.querySelector('.file-preview-container');
+        previewContainer.classList.add('hidden');
+    }
+</script>
+@endpush
+

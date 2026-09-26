@@ -70,6 +70,7 @@ class FormController extends Controller
             'start_time' => 'required|date',
             'signature_supervisor' => 'required|string',
             'attachment' => 'nullable|file|mimes:jpeg,png,jpg,mp4,mov,pdf,zip|max:10240', // Maks 10MB
+            'camera_attachment' => 'nullable|file|mimes:jpeg,png,jpg,mp4,mov|max:10240', // Maks 10MB
         ]);
 
         $generalKeys = [
@@ -81,9 +82,14 @@ class FormController extends Controller
         $formData = $request->except($generalKeys);
 
         // Logika Upload File
-        if ($request->hasFile('attachment')) {
+        $file = null;
+        if ($request->hasFile('camera_attachment')) {
+            $file = $request->file('camera_attachment');
+        } elseif ($request->hasFile('attachment')) {
             $file = $request->file('attachment');
-            
+        }
+
+        if ($file) {
             if (env('CLOUDINARY_URL')) {
                 // Gunakan Cloudinary disk secara native (V3)
                 $path = $file->store('dokumentasi', 'cloudinary');
