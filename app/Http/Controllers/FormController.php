@@ -125,107 +125,594 @@ class FormController extends Controller
     {
         $library = [
             // ... (Pertanyaan KKH-01 sampai PRD-03 sebelumnya tetap ada di sini) ...
-            'KKH-01-BANDARA' => [
-                'Airport service assistance/ground handling dilaksanakan pada area penjemputan standar di luar pintu exit.',
-                'Kendaraan operasional bandara: Mini MPV min. tahun 2021, AC, GPS tracking, standar keamanan, dan standby 12 jam/hari; sudah termasuk supir, biaya tol, parkir, uang makan supir, dan bahan bakar; 1 unit.',
-                'Bis penjemputan peserta: Fullday, tahun 2020, kapasitas 59 seater (termasuk supir), bahan bakar, biaya tol, dan parkir, GPS tracking dan alat pengamanan standar; Peruntukan penjemputan: Bandara – Hotel; 5 unit.',
-                'Proses kedatangan/penjemputan peserta dan pergerakan Bandara-Hotel terlaksana sesuai daftar/jadwal panitia.',
-                'Konsumsi petugas bandara tersedia sesuai kebutuhan kedatangan/kepulangan (25 pax; makan siang atau malam sesuai waktu).',
-                'Koordinasi ground handling, pengemudi dan transportasi berjalan; kendala peserta/kendaraan segera ditindaklanjuti.',
-                'Dokumentasi kondisi lapangan/kejadian penting tersedia sebagai bukti pengawasan.'
-            ],
-            'KKH-02-HOTEL' => [
-                'Registration Counter di Foyer Ballroom siap; printer warna multifungsi (tipe Desk Jet, sudah termasuk isi ulang tinta asli) sebanyak 1 unit.',
-                'Standing signage/penanda arah (dengan Tiang – Tripod dan Tatakan Foam Board, Cetak Stiker Warna/Cetak di atas Kertas HVS A0) tersedia dan terpasang sesuai kebutuhan area hotel.',
-                'Ruang Meeting Ballroom disiapkan sesuai agenda: U Shape no table / Classroom / sesuai ruang sebagaimana jadwal.',
-                'Area Main Stage: backdrop 7 m x 4 m dan bendera vandel/fraksi beserta tiang pataka terpasang baik.',
-                'Area peserta: power plug sockets 5 lubang (10 unit) dan laptop sekretariat dengan spesifikasi I-core 5 / 7, OS Windows 2023, MS Office 2023, Software Standard PDF dilengkapi dengan antivirus yang tersedia serta berfungsi (1 unit).',
-                'Konsumsi/air minum petugas di venue dan hotel tersedia sesuai kebutuhan hari.',
-                'Koordinasi transportasi Hotel-DPR/Hotel-Museum/Hotel-Lokus berjalan sesuai agenda dan perubahan tercatat.',
-                'Dokumentasi kegiatan dan catatan kondisi venue/temuan hari tersedia.'
-            ],
-            'KKH-03-DPRRI' => [
-                'Ruang Pustakaloka, Nusantara 4 untuk Opening Ceremony disiapkan Theater Style sesuai kebutuhan agenda.',
-                'Lighting system tersedia/berfungsi: Parled (12 unit), moving beam 350/400 (8 unit), tripod (2 unit), Fresnell (8 unit), dan mixer light (1 unit).',
-                'Laptop notetaker dengan spesifikasi I-core 5 / 7, OS Windows 2023, MS Office 2023, Software Standard PDF dilengkapi dengan antivirus tersedia dan berfungsi (1 unit).',
-                'Area group photo: Backdrop Photo dengan konstruksi kayu, uk. 11 m x 4 m, L. 30 cm (1 unit) dan lighting photo (1 pack) siap bila digunakan.',
-                'Sekretariat PCO (Ruang Kantor/Tamu KK 2/BAMUS Gedung Nusantara): stationery berisi kertas A4, ballpoint, stabilo, map plastik bening, spidol warna merah, biru, dan hitam, stapler medium dan kecil beserta isi, gunting, klip kertas, klip binder beraneka ukuran (1 paket); dan power plug/extension minimal 6 plug (5 unit) tersedia.',
-                'Kebersihan tambahan terjaga pada Gedung Nusantara, Gedung Nusantara II/public area – lobby dan ruang ibadah terkait.',
-                'Signage venue/penunjuk arah/meeting room signage terpasang baik dan penempatan sesuai arahan panitia.',
-                'HT/intercom/perangkat komunikasi petugas tersedia dan berfungsi pada area kegiatan.',
-                'Dokumentasi foto/video serta catatan kejadian/ketidaksesuaian di area DPR RI tersedia.'
-            ],
-            'KKH-04-TRANSPORT' => [
-                'Bis penjemputan/pengantaran/shuttle sesuai jenis penggunaan hari, kapasitas 59 seater dan jumlah unit sesuai rencana.',
-                'Bis dilengkapi GPS tracking system dan alat pengamanan standar (pemecah kaca, fire extinguisher, dll.).',
-                'Rute sesuai agenda: Bandara-Hotel; Hotel-Bandara; Hotel-DPR-Hotel; Hotel-Museum Nasional; atau Hotel-Lokus Kunker.',
-                'Durasi kendaraan dipantau: maks. 12 jam untuk shuttle/operasional dan maks. 6 jam untuk pengantaran Hotel-Bandara.',
-                'Kendaraan angkut Mini Bus 16 seater min. tahun 2021: AC dan GPS tracking; tersedia sesuai kebutuhan.',
-                'Kendaraan operasional Mini MPV/VAN min. tahun 2021: AC, GPS tracking dan driver tersedia.',
-                'Stiker kendaraan shuttle pada kaca depan terpasang bila digunakan sesuai kebutuhan.',
-                'Waktu berangkat/tiba, perubahan rute, kendala kendaraan dan tindak lanjut dicatat.'
-            ],
-            'KKH-05-KUNKER' => [
-                'Kedatangan peserta di lokus dan kepulangan ke hotel terkoordinasi sesuai agenda/daftar peserta panitia.',
-                'Bis shuttle Hotel-Lokus Kunker memenuhi kapasitas, GPS tracking dan alat pengamanan standar.',
-                'Ketersediaan kendaraan selama kunjungan dipantau dan perubahan operasional dicatat.',
-                'Koordinasi petugas transportasi/EO/PIC lokus berjalan dan perubahan agenda diteruskan kepada pihak terkait.',
-                'Pergerakan peserta pada titik turun/naik kendaraan berlangsung tertib dan kendala lapangan dicatat.',
-                'Perangkat komunikasi lapangan tersedia/berfungsi sesuai kebutuhan koordinasi.',
-                'Dokumentasi foto/video kegiatan dan bukti temuan pengawasan tersedia.'
-            ],
-            'KKH-06-MUSEUM' => [
-                'Tiket masuk Museum Nasional dan Immersive Studio tersedia/digunakan sesuai kebutuhan peserta (210 pax).',
-                'Kedatangan, masuk area, dan kepulangan peserta terkoordinasi sesuai agenda dan daftar peserta panitia.',
-                'Bis shuttle Hotel-Museum Nasional memenuhi kapasitas 59 seater, GPS tracking dan alat pengamanan standar.',
-                'Ketersediaan kendaraan dipantau; waktu tiba/berangkat serta kendala transportasi dicatat.',
-                'Koordinasi EO/PIC dengan petugas transportasi dan peserta berjalan selama city tour.',
-                'Perangkat komunikasi lapangan tersedia/berfungsi sesuai kebutuhan koordinasi.',
-                'Dokumentasi foto/video kegiatan dan bukti temuan pengawasan tersedia.'
-            ],
-            'PRD-01A' => [
-                'Backdrop Main Stage: Konstruksi kayu 7 m x 4 m; flexy indoor; cetak warna; termasuk pasang & bongkar; 1 unit.',
-                'Bendera Vandel Fraksi: 80 x 120 cm; beludru/satin/drill; bordir + rumbai; tiang pataka 2,5 m; 8 unit.',
-                'Backdrop Area Group Photo: Konstruksi kayu 11 m x 4 m; digital printing bolak-balik; 1 unit.',
-                'Handheld Signage: A3 polyfoam + sticker vinyl; gagang min. 30 cm; 6 unit.',
-                'T Banner Area DPR RI: 60 x 270 cm; vinyl outdoor full color + rangka; 35 unit/titik; termasuk pasang, bongkar, kontrol.'
-            ],
-            'PRD-01B' => [
-                'Stiker Kendaraan Shuttle: A4 landscape; vinyl; ditempel di kaca depan; 6 pcs.',
-                'Totem Nama Event: Konstruksi kayu ±244 x 60 x 12 cm; sticker depan-belakang; 1 unit.',
-                'Signage Direction: Konstruksi kayu ±244 x 60 x 12 cm; sticker depan-belakang; 1 unit.',
-                'Standing/Meeting Signage: Tripod + media cetak A0; periksa desain, wording, penempatan dan jumlah.',
-                'Produksi lainnya: Periksa kuantitas dan spesifikasi (Item, Qty, Spesifikasi) sesuai aktual di lapangan.'
-            ],
-            'PRD-02A' => [
-                'Jaket Panitia: Cotton Fleece PE; furing peles; kancing snap plastik; 160 pcs.',
-                'Kaos Polo Panitia: Cotton Combed 24S; bordir logo; 160 pcs.',
-                'Jaket Peserta: Parasut; kancing/resleting YKK; bordir warna; standar PARJA 2025; 200 pcs.',
-                'Kaos Peserta: T-shirt katun; logo sablon laser; standar PARJA 2025; 200 pcs.',
-                'Topi Peserta: Model baseball; bordir logo; desain/warna sesuai arahan panitia; 200 pcs.',
-                'Celana Training: Bahan polar fleece; desain/warna sesuai arahan; standar PARJA 2025; 200 pcs.',
-                'Jaket Peserta Terbaik/Terfavorit: Parasut; resleting; bordir depan dan sablon belakang; 6 pcs.'
-            ],
-            'PRD-02B' => [
-                'Tas Conference: Ransel anti air untuk laptop 15 inci; desain/warna sesuai arahan; 360 pcs.',
-                'Tumbler: Stainless steel 750 ml; grafir logo event; 210 pcs.',
-                'Blocknote + Pen: Blocknote A5 50 lembar + pulpen metal grafir; 210 set.',
-                'Participant Pin: Lapel pin magnet warna emas diameter 3 cm + box; 210 pcs.',
-                'ID Card & Lanyard: PVC 18 x 12 cm; full color; kategori warna dikoordinasikan; 300 set.',
-                'Sertifikat + Frame: Art Carton 210 gr + map/frame; 10 set.',
-                'Bag Tag / Luggage Tag: Kulit sintetis + kantong kartu; 210 pcs.',
-                'Plakat Peserta Terbaik: Akrilik + box beludru; 7 pcs.'
-            ],
-            'PRD-03' => [
-                'Multimedia Bumper & Graphic: Konten audio/visual/audio-visual sesuai KV; bumper program/narasumber/lower third; 1 pkg.',
-                'Desain Grafis & Sosial Media: Desain grafis 2D/layout; konten sesuai draft/arahan Humas; 1 pkg.',
-                'Dokumentasi Foto: 2 photographer; output raw pada hardisk + edited via drive; 1 paket.',
-                'Dokumentasi Video: Liputan kegiatan oleh 2 cameraman profesional; 1 paket.',
-                'Video Highlight: Versi pendek 3-5 menit + full version; 2 paket.',
-                'Sameday Edit / Daily Recap: Rekap kegiatan 1 hari penuh pada simulasi sidang, diedit hari yang sama; 1 paket.',
-                'Final Report: Jilid soft cover Art Paper 150; isi HVS A4 80 gr; print color; 5 set.'
-            ],
-            
+                'KKH-01-BANDARA' => [
+        [
+            'title' => 'Airport service assistance/ground handling dilaksanakan pada area penjemputan standar di luar pintu exit.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Kendaraan operasional bandara:',
+            'subitems' => [
+                'Mini MPV min. tahun 2021',
+                'AC',
+                'GPS tracking',
+                'Standar keamanan',
+                'Standby 12 jam/hari',
+                'Sudah termasuk supir, biaya tol, parkir, uang makan supir, dan bahan bakar',
+                '1 unit',
+            ]
+        ],
+        [
+            'title' => 'Bis penjemputan peserta: Bandara – Hotel;',
+            'subitems' => [
+                'Fullday',
+                'Tahun 2020',
+                'Kapasitas 59 seater (termasuk supir)',
+                'Bahan bakar, biaya tol, dan parkir',
+                'GPS tracking dan alat pengamanan standar (pemecah kaca, fire extenguiser dlsb)',
+                '5 unit',
+            ]
+        ],
+        [
+            'title' => 'Proses kedatangan/penjemputan peserta dan pergerakan Bandara-Hotel terlaksana sesuai daftar/jadwal panitia.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Konsumsi petugas bandara tersedia sesuai kebutuhan:',
+            'subitems' => [
+                'Kedatangan: 25 pax makan siang/malam sesuai waktu',
+                'Kepulangan: 25 pax makan siang/malam sesuai waktu',
+            ]
+        ],
+        [
+            'title' => 'Koordinasi ground handling, pengemudi dan transportasi berjalan; kendala peserta/kendaraan segera ditindaklanjuti.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Dokumentasi kondisi lapangan/kejadian penting tersedia sebagai bukti pengawasan.',
+            'subitems' => [
+            ]
+        ],
+    ],
+    'KKH-02-HOTEL' => [
+        [
+            'title' => 'Registration Counter di Foyer Ballroom:',
+            'subitems' => [
+                'Printer warna multifungsi 1 unit',
+                'Tipe Desk Jet',
+                'Isi ulang tinta asli',
+            ]
+        ],
+        [
+            'title' => 'Standing signage/penanda arah:',
+            'subitems' => [
+                '4 unit area hotel',
+                'Tiang',
+                'Tripod',
+                'Tatakan Foam Board',
+                'Cetak Stiker Warna/Cetak di atas Kertas HVS A0',
+            ]
+        ],
+        [
+            'title' => 'Ruang Meeting Ballroom disiapkan sesuai agenda: U Shape no table / Classroom / sesuai ruang sebagaimana jadwal.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Area Main Stage:',
+            'subitems' => [
+                'Backdrop 7 m x 4 m',
+                'Bendera vandel/fraksi',
+                'Tiang pataka',
+            ]
+        ],
+        [
+            'title' => 'Area peserta:',
+            'subitems' => [
+                'Power plug sockets 5 lubang (10 unit)',
+                'Laptop sekretariat dengan spesifikasi I-core 5 / 7, OS Windows 2023, MS Office 2023, Software Standard PDF dilengkapi dengan antivirus yang tersedia serta berfungsi (1 unit)',
+            ]
+        ],
+        [
+            'title' => 'Konsumsi/air minum petugas di venue dan hotel tersedia sesuai kebutuhan hari.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Koordinasi transportasi berjalan sesuai agenda dan perubahan tercatat:',
+            'subitems' => [
+                'Hotel-DPR',
+                'Hotel-Museum',
+                'Hotel-Lokus',
+            ]
+        ],
+        [
+            'title' => 'Dokumentasi kegiatan dan catatan kondisi venue/temuan hari tersedia.',
+            'subitems' => [
+            ]
+        ],
+    ],
+    'KKH-03-DPRRI' => [
+        [
+            'title' => 'Ruang Pustakaloka untuk Opening Ceremony disiapkan Theater Style sesuai kebutuhan agenda.',
+            'subitems' => [
+                'Ruang Nusantara 4 untuk Opening Ceremony disiapkan Theater Style sesuai kebutuhan agenda.',
+            ]
+        ],
+        [
+            'title' => 'Lighting system tersedia/berfungsi:',
+            'subitems' => [
+                'Parled (12 unit)',
+                'moving beam 350/400 (8 unit)',
+                'tripod (2 unit)',
+                'Fresnell (8 unit)',
+                'mixer light (1 unit)',
+            ]
+        ],
+        [
+            'title' => 'Laptop notetaker dengan spesifikasi:',
+            'subitems' => [
+                'I-core 5 / 7',
+                'OS Windows 2023',
+                'MS Office 2023',
+                'Software Standard PDF dilengkapi dengan antivirus',
+                '1 unit',
+            ]
+        ],
+        [
+            'title' => 'Area group photo:',
+            'subitems' => [
+                'Backdrop Photo dengan konstruksi kayu, uk. 11 m x 4 m, L. 30 cm (1 unit)',
+                'lighting photo (1 pack)',
+            ]
+        ],
+        [
+            'title' => 'Sekretariat PCO (Ruang Kantor/Tamu KK 2/BAMUS Gedung Nusantara):',
+            'subitems' => [
+                'Stationery berisi kertas A4',
+                'Ballpoint,',
+                'Stabilo',
+                'Map plastik bening',
+                'Spidol warna merah, biru, dan hitam',
+                'Stapler medium dan kecil beserta isi',
+                'Gunting',
+                'Klip kertas',
+                'Power plug/extension minimal 6 plug (5 unit)',
+            ]
+        ],
+        [
+            'title' => 'Kebersihan tambahan terjaga pada Gedung Nusantara, Gedung Nusantara II/public area – lobby dan ruang ibadah terkait.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Signage venue/penunjuk arah/meeting room signage terpasang baik dan penempatan sesuai arahan panitia.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'HT 20 unit /intercom 5 unit/perangkat komunikasi petugas tersedia dan berfungsi pada area kegiatan.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Dokumentasi foto/video serta catatan kejadian/ketidaksesuaian di area DPR RI tersedia.',
+            'subitems' => [
+            ]
+        ],
+    ],
+    'KKH-04-TRANSPORT' => [
+        [
+            'title' => 'Bis penjemputan/pengantaran/shuttle sesuai jenis penggunaan hari:',
+            'subitems' => [
+                'kapasitas 59 seater',
+                '4 unit sesuai rencana',
+            ]
+        ],
+        [
+            'title' => 'Bis dilengkapi GPS tracking system dan alat pengamanan standar (pemecah kaca, fire extinguisher, dll.).',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Rute sesuai agenda:',
+            'subitems' => [
+                'Bandara-Hotel',
+                'Hotel-Bandara',
+                'Hotel-DPR-Hotel',
+                'Hotel-Museum Nasional',
+                'Hotel-Lokus Kunker',
+            ]
+        ],
+        [
+            'title' => 'Durasi kendaraan dipantau:',
+            'subitems' => [
+                'maks. 12 jam untuk shuttle/operasional',
+                '6 jam untuk pengantaran Hotel-Bandara',
+            ]
+        ],
+        [
+            'title' => 'Kendaraan angkut Mini Bus:',
+            'subitems' => [
+                'Mini Bus 16 seater Min. tahun 2021',
+                'AC dan alat GPS Tracking system',
+                'Biaya sewa sudah termasuk bahan bakar, supir, biaya tol dan parkir, serta uang makan supir',
+                'Biaya sewa max 12 jam',
+            ]
+        ],
+        [
+            'title' => 'Kendaraan operasional:',
+            'subitems' => [
+                'mini MPV atau VAN minimum tahun 2021 up',
+                'AC',
+                'Pengharum kendaraan',
+                'Termasuk driver, tol dan bahan bakar',
+                'Harga sewa per 12 jam',
+                'Memiliki GPS tracking system',
+            ]
+        ],
+        [
+            'title' => 'Stiker kendaraan shuttle pada kaca depan terpasang bila digunakan sesuai kebutuhan.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Waktu berangkat/tiba, perubahan rute, kendala kendaraan dan tindak lanjut dicatat.',
+            'subitems' => [
+            ]
+        ],
+    ],
+    'KKH-05-KUNKER' => [
+        [
+            'title' => 'Kedatangan peserta di lokus dan kepulangan ke hotel terkoordinasi sesuai agenda/daftar peserta panitia.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Bis shuttle Hotel-Lokus Kunker memenuhi kapasitas:',
+            'subitems' => [
+                'tahun 2020',
+                '4 Unit',
+                'kapasitas 59 seater (termasuk supir)',
+                'bahan bakar, biaya tol, dan parkir,',
+                'GPS tracking dan alat pengamanan standar (pemecah kaca, fire extenguiser dlsb)',
+            ]
+        ],
+        [
+            'title' => 'Ketersediaan kendaraan selama kunjungan dipantau dan perubahan operasional dicatat.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Koordinasi petugas transportasi/EO/PIC lokus berjalan dan perubahan agenda diteruskan kepada pihak terkait.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Pergerakan peserta pada titik turun/naik kendaraan berlangsung tertib dan kendala lapangan dicatat.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Perangkat komunikasi lapangan tersedia/berfungsi sesuai kebutuhan koordinasi.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Dokumentasi foto/video kegiatan dan bukti temuan pengawasan tersedia.',
+            'subitems' => [
+            ]
+        ],
+    ],
+    'KKH-06-MUSEUM' => [
+        [
+            'title' => 'Tiket masuk Museum Nasional dan Immersive Studio tersedia/digunakan sesuai kebutuhan peserta (210 pax).',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Kedatangan, masuk area, dan kepulangan peserta terkoordinasi sesuai agenda dan daftar peserta panitia.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Bis shuttle Hotel-Museum Nasional memenuhi kapasitas:',
+            'subitems' => [
+                'Bis tahun 2020',
+                '4 Unit',
+                'kapasitas 59 seater (termasuk supir)',
+                'bahan bakar, biaya tol, dan parkir',
+                'GPS tracking dan alat pengamanan standar (pemecah kaca, fire extenguiser dlsb)',
+            ]
+        ],
+        [
+            'title' => 'Ketersediaan kendaraan dipantau; waktu tiba/berangkat serta kendala transportasi dicatat.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Koordinasi EO/PIC dengan petugas transportasi dan peserta berjalan selama city tour.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Perangkat komunikasi lapangan tersedia/berfungsi sesuai kebutuhan koordinasi.',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Dokumentasi foto/video kegiatan dan bukti temuan pengawasan tersedia.',
+            'subitems' => [
+            ]
+        ],
+    ],
+    'PRD-01A' => [
+        [
+            'title' => 'Backdrop Main Stage:',
+            'subitems' => [
+                'Konstruksi kayu 7 m x 4 m',
+                'flexy indoor',
+                'cetak warna',
+                '1 Unit',
+            ]
+        ],
+        [
+            'title' => 'Bendera Vandel Fraksi:',
+            'subitems' => [
+                '80 x 120 cm',
+                'beludru/satin/drill',
+                'bordir + rumbai',
+                'tiang pataka 2,5 m',
+                '8 Unit',
+            ]
+        ],
+        [
+            'title' => 'Backdrop Area Group Photo:',
+            'subitems' => [
+                'Konstruksi kayu 11 m x 4 m',
+                'digital printing bolak-balik',
+                '1 Unit',
+            ]
+        ],
+        [
+            'title' => 'Handheld Signage:',
+            'subitems' => [
+                'A3 polyfoam + sticker vinyl',
+                'gagang min. 30 cm',
+                '6 Unit',
+            ]
+        ],
+        [
+            'title' => 'T Banner Area DPR RI:',
+            'subitems' => [
+                '60 x 270 cm',
+                'vinyl outdoor full color + rangka',
+                '35 unit/titik',
+                'termasuk pasang, bongkar, kontrol',
+            ]
+        ],
+    ],
+    'PRD-01B' => [
+        [
+            'title' => 'Stiker Kendaraan Shuttle:',
+            'subitems' => [
+                'A4 landscape',
+                'Vinyl',
+                'ditempel di kaca depan',
+                '6 pcs',
+            ]
+        ],
+        [
+            'title' => 'Totem Nama Event:',
+            'subitems' => [
+                'Konstruksi kayu ±244 x 60 x 12 cm',
+                'sticker depan-belakang',
+                '1 Unit',
+            ]
+        ],
+        [
+            'title' => 'Signage Direction:',
+            'subitems' => [
+                'Konstruksi kayu ±244 x 60 x 12 cm',
+                'sticker depan-belakang',
+                '1 Unit',
+            ]
+        ],
+        [
+            'title' => 'Standing/Meeting Signage:',
+            'subitems' => [
+                'Tripod + media cetak A0',
+                'periksa desain wording, penempatan',
+                '4 Unit',
+            ]
+        ],
+        [
+            'title' => 'Produksi lainnya Item: ____________________ | Qty: ______ | Spesifikasi: ______________________________',
+            'subitems' => [
+            ]
+        ],
+    ],
+    'PRD-02A' => [
+        [
+            'title' => 'Jaket Panitia:',
+            'subitems' => [
+                'Cotton Fleece PE',
+                'furing peles',
+                'kancing snap plastik',
+                '160 pcs',
+            ]
+        ],
+        [
+            'title' => 'Kaos Polo Panitia:',
+            'subitems' => [
+                'Cotton Combed 24S',
+                'bordir logo',
+                '160 pcs',
+            ]
+        ],
+        [
+            'title' => 'Jaket Peserta:',
+            'subitems' => [
+                'Parasut;',
+                'kancing/resleting YKK',
+                'bordir warna',
+                'standar PARJA 2025',
+                '200 pcs',
+            ]
+        ],
+        [
+            'title' => 'Kaos Peserta:',
+            'subitems' => [
+                'T-shirt katun',
+                'logo sablon laser',
+                'standar PARJA 2025',
+                '200 pcs',
+            ]
+        ],
+        [
+            'title' => 'Topi Peserta:',
+            'subitems' => [
+                'Model baseball',
+                'bordir logo',
+                'desain/warna sesuai arahan panitia',
+                '200 pcs',
+            ]
+        ],
+        [
+            'title' => 'Celana Training:',
+            'subitems' => [
+                'Bahan polar fleece',
+                'desain/warna sesuai arahan',
+                'standar PARJA 2025',
+                '200 pcs',
+            ]
+        ],
+        [
+            'title' => 'Jaket Peserta Terbaik/Terfavorit:',
+            'subitems' => [
+                'Parasut',
+                'resleting',
+                'bordir depan dan sablon belakang',
+                '6 pcs',
+            ]
+        ],
+    ],
+    'PRD-02B' => [
+        [
+            'title' => 'Tas Conference:',
+            'subitems' => [
+                'Ransel anti air untuk laptop 15 inci',
+                'desain/warna sesuai arahan',
+                '360 pcs',
+            ]
+        ],
+        [
+            'title' => 'Tumbler:',
+            'subitems' => [
+                'Stainless steel 750 ml',
+                'grafir logo event',
+                '210 pcs',
+            ]
+        ],
+        [
+            'title' => 'Blocknote + Pen:',
+            'subitems' => [
+                'Blocknote A5 50 lembar',
+                'pulpen metal grafir',
+                '210 set',
+            ]
+        ],
+        [
+            'title' => 'Participant Pin:',
+            'subitems' => [
+                'Lapel pin magnet warna emas diameter 3 cm',
+                'box',
+                '210 pcs',
+            ]
+        ],
+        [
+            'title' => 'ID Card & Lanyard',
+            'subitems' => [
+                'PVC 18 x 12 cm',
+                'full color',
+                '300 set',
+            ]
+        ],
+        [
+            'title' => 'Sertifikat + Frame:',
+            'subitems' => [
+                'Art Carton 210 gr',
+                'map/frame',
+                '10 set',
+            ]
+        ],
+        [
+            'title' => 'Bag Tag / Luggage Tak:',
+            'subitems' => [
+                'Kulit sintetis',
+                'kantong kartu',
+                '210 pcs',
+            ]
+        ],
+        [
+            'title' => 'Plakat Peserta Terbaik:',
+            'subitems' => [
+                'Akrilik',
+                'box beludru',
+                '7 pcs',
+            ]
+        ],
+    ],
+    'PRD-03' => [
+        [
+            'title' => 'Multimedia Bumper & Graphic Konten audio/visual/audio-visual sesuai KV; bumper program/narasumber/lower third; 1 pkg',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Desain Grafis & Sosial Media Desain grafis 2D/layout; konten sesuai draft/arahan Humas; 1 pkg',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Dokumentasi Foto:',
+            'subitems' => [
+                '2 photographer',
+                'output raw pada hardisk + edited via drive',
+                '1 paket',
+            ]
+        ],
+        [
+            'title' => 'Dokumentasi Video Liputan kegiatan oleh 2 cameraman profesional; 1 paket',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Video Highlight:',
+            'subitems' => [
+                'Versi pendek 3-5 menit',
+                'full version',
+                '2 paket',
+            ]
+        ],
+        [
+            'title' => 'Sameday Edit / Daily Recap Rekap kegiatan 1 hari penuh pada simulasi sidang, diedit hari yang sama; 1 paket',
+            'subitems' => [
+            ]
+        ],
+        [
+            'title' => 'Final Report:',
+            'subitems' => [
+                'Jilid soft cover Art Paper 150',
+                'isi HVS A4 80 gr',
+                'print color',
+                '5 set',
+            ]
+        ],
+    ],
             // --- PENAMBAHAN FORM ADMINISTRATIF ---
             'RHP-00' => [
                 'Bandara Soekarno-Hatta',

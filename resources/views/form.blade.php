@@ -54,12 +54,17 @@
                 </h3>
                 
                 @foreach($questions as $index =>$question)
+                    @php
+                        $is_array = is_array($question);
+                        $title = $is_array ? $question['title'] : $question;
+                        $subitems = $is_array ? $question['subitems'] : [];
+                    @endphp
                     <div class="mb-5 p-5 border border-gray-200 rounded-lg bg-white shadow-sm hover:border-blue-300 transition">
-                        <p class="text-sm font-bold text-gray-800 mb-3">{{ $index + 1 }}. {{$question }}</p>
+                        <p class="text-sm font-bold text-gray-800 mb-3">{{ $index + 1 }}. {{$title}}</p>
                         
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-                            @if($form_code == 'RHP-00')
-                                <!-- KONDISI 1: RHP-00 -->
+                        @if($form_code == 'RHP-00')
+                            <!-- RHP-00 selalu tidak punya subitems (is_array = false) -->
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
                                 <div>
                                     <label class="block text-xs font-semibold text-gray-600 mb-1">Status Umum</label>
                                     <div class="flex space-x-3">
@@ -84,45 +89,87 @@
                                     <label class="block text-xs font-semibold text-gray-600 mb-1">Temuan Prioritas / No. FT / Tindak Lanjut</label>
                                     <input type="text" name="q_{{ $index }}_tindak" placeholder="Keterangan temuan / tindak lanjut..." class="w-full border rounded-md p-2 text-xs bg-gray-50 border-gray-300 focus:border-black focus:ring-black">
                                 </div>
-
-                            @elseif(str_starts_with($form_code, 'PRD'))
-                                <!-- KONDISI 2: FORMULIR PRODUKSI (PRD) -->
-                                <div>
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Hasil Aktual / Qty</label>
-                                    <input type="text" name="q_{{ $index }}_aktual" placeholder="Cth: 1 Unit / Sesuai" class="w-full border rounded-md p-1.5 text-xs bg-gray-50 border-gray-300 focus:border-black focus:ring-black">
+                            </div>
+                        @else
+                            @if(empty($subitems))
+                                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                                    @if(str_starts_with($form_code, 'PRD'))
+                                        <div>
+                                            <label class="block text-xs font-semibold text-gray-600 mb-1">Hasil Aktual / Qty</label>
+                                            <input type="text" name="q_{{ $index }}_aktual" placeholder="Cth: 1 Unit / Sesuai" class="w-full border rounded-md p-1.5 text-xs bg-gray-50 border-gray-300 focus:border-black focus:ring-black">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-semibold text-gray-600 mb-1">Status Mutu</label>
+                                            <div class="flex space-x-2 text-xs">
+                                                <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_status" value="S" class="w-4 h-4 text-black form-radio border-gray-300 focus:ring-black" required> <span class="ml-1 font-bold text-black">S</span></label>
+                                                <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_status" value="TS" class="w-4 h-4 text-gray-800 form-radio border-gray-300 focus:ring-black"> <span class="ml-1 font-bold text-gray-800">TS</span></label>
+                                                <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_status" value="N/A" class="w-4 h-4 text-gray-500 form-radio border-gray-300 focus:ring-gray-500"> <span class="ml-1 font-bold text-gray-600">N/A</span></label>
+                                            </div>
+                                        </div>
+                                        <div class="md:col-span-2">
+                                            <label class="block text-xs font-semibold text-gray-600 mb-1">Catatan / No. FT</label>
+                                            <input type="text" name="q_{{ $index }}_catatan" placeholder="Catatan atau rujukan FT-01..." class="w-full border rounded-md p-1.5 text-xs bg-gray-50 border-gray-300 focus:border-black focus:ring-black">
+                                        </div>
+                                    @else
+                                        <div>
+                                            <label class="block text-xs font-semibold text-gray-600 mb-1">Status Umum</label>
+                                            <div class="flex space-x-3">
+                                                <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_status" value="S" class="w-4 h-4 text-black form-radio border-gray-300 focus:ring-black" required> <span class="ml-1 text-xs font-bold text-black">S</span></label>
+                                                <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_status" value="TS" class="w-4 h-4 text-gray-800 form-radio border-gray-300 focus:ring-black"> <span class="ml-1 text-xs font-bold text-gray-800">TS</span></label>
+                                                <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_status" value="N/A" class="w-4 h-4 text-gray-500 form-radio border-gray-300 focus:ring-gray-500"> <span class="ml-1 text-xs font-bold text-gray-600">N/A</span></label>
+                                            </div>
+                                        </div>
+                                        <div class="md:col-span-3">
+                                            <label class="block text-xs font-semibold text-gray-600 mb-1">Catatan / No. Temuan</label>
+                                            <input type="text" name="q_{{ $index }}_note" placeholder="Catatan / No. Temuan FT-01..." class="w-full border rounded-md p-2 text-sm bg-gray-50 border-gray-300 focus:border-black focus:ring-black">
+                                        </div>
+                                    @endif
                                 </div>
-                                <div>
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Status Mutu</label>
-                                    <div class="flex space-x-2 text-xs">
-                                        <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_status" value="S" class="w-4 h-4 text-black form-radio border-gray-300 focus:ring-black" required> <span class="ml-1 font-bold text-black">S</span></label>
-                                        <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_status" value="TS" class="w-4 h-4 text-gray-800 form-radio border-gray-300 focus:ring-black"> <span class="ml-1 font-bold text-gray-800">TS</span></label>
-                                        <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_status" value="N/A" class="w-4 h-4 text-gray-500 form-radio border-gray-300 focus:ring-gray-500"> <span class="ml-1 font-bold text-gray-600">N/A</span></label>
-                                    </div>
-                                </div>
-                                <div class="md:col-span-2">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Catatan / No. FT</label>
-                                    <input type="text" name="q_{{ $index }}_catatan" placeholder="Catatan atau rujukan FT-01..." class="w-full border rounded-md p-1.5 text-xs bg-gray-50 border-gray-300 focus:border-black focus:ring-black">
-                                </div>
-
                             @else
-                                <!-- KONDISI 3: FORM STANDAR KKH -->
-                                <div>
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Status Umum</label>
-                                    <div class="flex space-x-3">
-                                        <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_status" value="S" class="w-4 h-4 text-black form-radio border-gray-300 focus:ring-black" required> <span class="ml-1 text-xs font-bold text-black">S</span></label>
-                                        <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_status" value="TS" class="w-4 h-4 text-gray-800 form-radio border-gray-300 focus:ring-black"> <span class="ml-1 text-xs font-bold text-gray-800">TS</span></label>
-                                        <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_status" value="N/A" class="w-4 h-4 text-gray-500 form-radio border-gray-300 focus:ring-gray-500"> <span class="ml-1 text-xs font-bold text-gray-600">N/A</span></label>
-                                    </div>
-                                </div>
-                                <div class="md:col-span-3">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Catatan / No. Temuan</label>
-                                    <input type="text" name="q_{{ $index }}_note" placeholder="Catatan / No. Temuan FT-01..." class="w-full border rounded-md p-2 text-sm bg-gray-50 border-gray-300 focus:border-black focus:ring-black">
+                                <div class="space-y-4">
+                                    @foreach($subitems as $subIndex => $subitem)
+                                        <div class="border-t pt-3 grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                                            <div class="md:col-span-4">
+                                                <p class="text-sm text-gray-700">- {{ $subitem }}</p>
+                                            </div>
+                                            @if(str_starts_with($form_code, 'PRD'))
+                                                <div>
+                                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Hasil Aktual / Qty</label>
+                                                    <input type="text" name="q_{{ $index }}_sub_{{ $subIndex }}_aktual" placeholder="Cth: 1 Unit / Sesuai" class="w-full border rounded-md p-1.5 text-xs bg-gray-50 border-gray-300 focus:border-black focus:ring-black">
+                                                </div>
+                                                <div>
+                                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Status Mutu</label>
+                                                    <div class="flex space-x-2 text-xs">
+                                                        <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_sub_{{ $subIndex }}_status" value="S" class="w-4 h-4 text-black form-radio border-gray-300 focus:ring-black" required> <span class="ml-1 font-bold text-black">S</span></label>
+                                                        <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_sub_{{ $subIndex }}_status" value="TS" class="w-4 h-4 text-gray-800 form-radio border-gray-300 focus:ring-black"> <span class="ml-1 font-bold text-gray-800">TS</span></label>
+                                                        <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_sub_{{ $subIndex }}_status" value="N/A" class="w-4 h-4 text-gray-500 form-radio border-gray-300 focus:ring-gray-500"> <span class="ml-1 font-bold text-gray-600">N/A</span></label>
+                                                    </div>
+                                                </div>
+                                                <div class="md:col-span-2">
+                                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Catatan / No. FT</label>
+                                                    <input type="text" name="q_{{ $index }}_sub_{{ $subIndex }}_catatan" placeholder="Catatan atau rujukan FT-01..." class="w-full border rounded-md p-1.5 text-xs bg-gray-50 border-gray-300 focus:border-black focus:ring-black">
+                                                </div>
+                                            @else
+                                                <div class="md:col-span-1">
+                                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Status Umum</label>
+                                                    <div class="flex space-x-3">
+                                                        <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_sub_{{ $subIndex }}_status" value="S" class="w-4 h-4 text-black form-radio border-gray-300 focus:ring-black" required> <span class="ml-1 text-xs font-bold text-black">S</span></label>
+                                                        <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_sub_{{ $subIndex }}_status" value="TS" class="w-4 h-4 text-gray-800 form-radio border-gray-300 focus:ring-black"> <span class="ml-1 text-xs font-bold text-gray-800">TS</span></label>
+                                                        <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_{{ $index }}_sub_{{ $subIndex }}_status" value="N/A" class="w-4 h-4 text-gray-500 form-radio border-gray-300 focus:ring-gray-500"> <span class="ml-1 text-xs font-bold text-gray-600">N/A</span></label>
+                                                    </div>
+                                                </div>
+                                                <div class="md:col-span-3">
+                                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Catatan / No. Temuan</label>
+                                                    <input type="text" name="q_{{ $index }}_sub_{{ $subIndex }}_note" placeholder="Catatan / No. Temuan FT-01..." class="w-full border rounded-md p-2 text-sm bg-gray-50 border-gray-300 focus:border-black focus:ring-black">
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @endforeach
                                 </div>
                             @endif
-                        </div>
+                        @endif
                     </div>
-                @endforeach
-            </div>
+                @endforeach            </div>
         @elseif(!in_array($form_code, ['RT-01', 'FT-01', 'BA-TL-01']))
             <div class="mb-6 p-4 bg-yellow-50 rounded-md border border-yellow-200">
                 <p class="text-sm text-yellow-800">Daftar pertanyaan/pos/item untuk form ini belum dikonfigurasi.</p>

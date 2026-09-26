@@ -91,25 +91,53 @@
                 <th style="width: 34%;">Temuan Prioritas / No. FT / Tindak Lanjut</th>
             </tr>
             @if(isset($questions) && count($questions) > 0)
-                @foreach($questions as $index => $pos)
+                @foreach($questions as $index => $item)
                     @php
-                        $status = $submission->form_data['q_'.$index.'_status'] ?? '';
-                        $open   = $submission->form_data['q_'.$index.'_open'] ?? '';
-                        $closed = $submission->form_data['q_'.$index.'_closed'] ?? '';
-                        $tindak = $submission->form_data['q_'.$index.'_tindak'] ?? '';
+                        $is_array = is_array($item);
+                        $title = $is_array ? $item['title'] : $item;
+                        $subitems = $is_array ? $item['subitems'] : [];
                     @endphp
-                    <tr>
-                        <td class="text-center">{{ $index + 1 }}</td>
-                        <td>{{ $pos }}</td>
-                        <td class="text-center check-box" style="white-space: nowrap;">
-                            [{{ $status == 'S' ? 'X' : ' ' }}] S &nbsp;
-                            [{{ $status == 'TS' ? 'X' : ' ' }}] TS &nbsp;
-                            [{{ $status == 'N/A' ? 'X' : ' ' }}] N/A
-                        </td>
-                        <td class="text-center check-box">{{ $open ? '[X]' : '' }}</td>
-                        <td class="text-center check-box">{{ $closed ? '[X]' : '' }}</td>
-                        <td>{{ $tindak }}</td>
-                    </tr>
+                    @if(empty($subitems))
+                        @php
+                            $aktual = $submission->form_data['q_'.$index.'_aktual'] ?? '';
+                            $status = $submission->form_data['q_'.$index.'_status'] ?? '';
+                            $catatan = $submission->form_data['q_'.$index.'_catatan'] ?? '';
+                        @endphp
+                        <tr>
+                            <td class="text-center">{{ $index + 1 }}</td>
+                            <td>{!! nl2br(e($title)) !!}</td>
+                            <td class="text-center">{{ $aktual }}</td>
+                            <td class="text-center check-box" style="font-weight: normal;">
+                                [{{ $status == 'S' ? 'X' : ' ' }}] S <br>
+                                [{{ $status == 'TS' ? 'X' : ' ' }}] TS <br>
+                                [{{ $status == 'N/A' ? 'X' : ' ' }}] N/A
+                            </td>
+                            <td>{{ $catatan }}</td>
+                        </tr>
+                    @else
+                        <tr>
+                            <td class="text-center">{{ $index + 1 }}</td>
+                            <td colspan="4" class="text-bold">{!! nl2br(e($title)) !!}</td>
+                        </tr>
+                        @foreach($subitems as $subIndex => $subitem)
+                            @php
+                                $aktual = $submission->form_data['q_'.$index.'_sub_'.$subIndex.'_aktual'] ?? '';
+                                $status = $submission->form_data['q_'.$index.'_sub_'.$subIndex.'_status'] ?? '';
+                                $catatan = $submission->form_data['q_'.$index.'_sub_'.$subIndex.'_catatan'] ?? '';
+                            @endphp
+                            <tr>
+                                <td></td>
+                                <td>- {!! nl2br(e($subitem)) !!}</td>
+                                <td class="text-center">{{ $aktual }}</td>
+                                <td class="text-center check-box" style="font-weight: normal;">
+                                    [{{ $status == 'S' ? 'X' : ' ' }}] S <br>
+                                    [{{ $status == 'TS' ? 'X' : ' ' }}] TS <br>
+                                    [{{ $status == 'N/A' ? 'X' : ' ' }}] N/A
+                                </td>
+                                <td>{{ $catatan }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
                 @endforeach
             @else
                 <tr><td colspan="6" class="text-center"><em>Tidak ada data rekap pos yang ditemukan.</em></td></tr>
@@ -424,17 +452,44 @@
             @if(isset($questions) && count($questions) > 0)
                 @foreach($questions as $index => $question)
                     @php
-                        $status = $submission->form_data['q_'.$index.'_status'] ?? '';
-                        $note = $submission->form_data['q_'.$index.'_note'] ?? '';
+                        $is_array = is_array($question);
+                        $title = $is_array ? $question['title'] : $question;
+                        $subitems = $is_array ? $question['subitems'] : [];
                     @endphp
-                    <tr>
-                        <td class="col-no text-center">{{ $index + 1 }}</td>
-                        <td class="col-objek">{{ $question }}</td>
-                        <td class="col-status text-center check-box" style="font-weight: normal; white-space: nowrap;">
-                            [{{ $status == 'S' ? 'X' : ' ' }}] S &nbsp; [{{ $status == 'TS' ? 'X' : ' ' }}] TS &nbsp; [{{ $status == 'N/A' ? 'X' : ' ' }}] N/A
-                        </td>
-                        <td class="col-catatan">{{ $note }}</td>
-                    </tr>
+                    
+                    @if(empty($subitems))
+                        @php
+                            $status = $submission->form_data['q_'.$index.'_status'] ?? '';
+                            $note = $submission->form_data['q_'.$index.'_note'] ?? '';
+                        @endphp
+                        <tr>
+                            <td class="col-no text-center">{{ $index + 1 }}</td>
+                            <td class="col-objek">{!! nl2br(e($title)) !!}</td>
+                            <td class="col-status text-center check-box" style="font-weight: normal; white-space: nowrap;">
+                                [{{ $status == 'S' ? 'X' : ' ' }}] S &nbsp; [{{ $status == 'TS' ? 'X' : ' ' }}] TS &nbsp; [{{ $status == 'N/A' ? 'X' : ' ' }}] N/A
+                            </td>
+                            <td class="col-catatan">{{ $note }}</td>
+                        </tr>
+                    @else
+                        <tr>
+                            <td class="col-no text-center">{{ $index + 1 }}</td>
+                            <td class="col-objek text-bold" colspan="3">{!! nl2br(e($title)) !!}</td>
+                        </tr>
+                        @foreach($subitems as $subIndex => $subitem)
+                            @php
+                                $status = $submission->form_data['q_'.$index.'_sub_'.$subIndex.'_status'] ?? '';
+                                $note = $submission->form_data['q_'.$index.'_sub_'.$subIndex.'_note'] ?? '';
+                            @endphp
+                            <tr>
+                                <td></td>
+                                <td class="col-objek">- {!! nl2br(e($subitem)) !!}</td>
+                                <td class="col-status text-center check-box" style="font-weight: normal; white-space: nowrap;">
+                                    [{{ $status == 'S' ? 'X' : ' ' }}] S &nbsp; [{{ $status == 'TS' ? 'X' : ' ' }}] TS &nbsp; [{{ $status == 'N/A' ? 'X' : ' ' }}] N/A
+                                </td>
+                                <td class="col-catatan">{{ $note }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
                 @endforeach
             @else
                 <tr><td colspan="4" class="text-center"><em>Tidak ada kriteria ceklis yang ditemukan.</em></td></tr>
