@@ -212,6 +212,12 @@
                         <input type="text" name="ft_pic" placeholder="Nama PIC & target..." class="mt-1 w-full border rounded-md p-1.5 text-xs bg-white border-gray-300 focus:border-black focus:ring-black">
                     </div>
                 </div>
+
+                <div class="pt-4 border-t border-gray-200">
+                    <label class="block text-sm font-medium text-gray-700">Unggah File Dokumentasi (Opsional)</label>
+                    <input type="file" name="attachment" accept="image/*,video/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-black hover:file:bg-gray-200 border border-gray-300 rounded-md bg-white">
+                    <p class="mt-1 text-xs text-gray-500">Maksimal ukuran file 10 MB (JPG, PNG, MP4).</p>
+                </div>
             </div>
 
         @elseif($form_code == 'RT-01')
@@ -368,6 +374,12 @@
                         <input type="text" name="ft[no_lampiran]" class="mt-1 block w-full border-b border-gray-300 bg-transparent focus:outline-none text-sm p-1">
                     </div>
                 </div>
+
+                <div class="mt-4 pt-4 border-t border-gray-200">
+                    <label class="block text-sm font-medium text-gray-700">Unggah File Lampiran (Opsional)</label>
+                    <input type="file" name="attachment" accept=".jpg,.jpeg,.png,.mp4,.mov,.pdf,.zip" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-black hover:file:bg-gray-200 border border-gray-300 rounded-md bg-white">
+                    <p class="mt-1 text-xs text-gray-500">Maksimal ukuran file 10 MB (JPG, PNG, MP4, PDF, ZIP).</p>
+                </div>
             </div>
 
                 </div>
@@ -472,6 +484,12 @@
                         <label class="block text-sm font-semibold text-gray-700">Tindak lanjut sisa</label>
                         <input type="text" name="ba[tindak_lanjut_sisa]" class="mt-1 block w-full border-b border-gray-300 bg-transparent focus:outline-none text-sm p-1">
                     </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-gray-200">
+                    <label class="block text-sm font-medium text-gray-700">Unggah File Lampiran (Opsional)</label>
+                    <input type="file" name="attachment" accept=".jpg,.jpeg,.png,.mp4,.mov,.pdf,.zip" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-black hover:file:bg-gray-200 border border-gray-300 rounded-md bg-white">
+                    <p class="mt-1 text-xs text-gray-500">Maksimal ukuran file 10 MB (JPG, PNG, MP4, PDF, ZIP).</p>
                 </div>
             </div>
 

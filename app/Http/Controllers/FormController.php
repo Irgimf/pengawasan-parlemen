@@ -69,7 +69,7 @@ class FormController extends Controller
             'location' => 'nullable|string|max:255',
             'start_time' => 'required|date',
             'signature_supervisor' => 'required|string',
-            'attachment' => 'nullable|file|mimes:jpeg,png,jpg,mp4,mov|max:10240', // Maks 10MB
+            'attachment' => 'nullable|file|mimes:jpeg,png,jpg,mp4,mov,pdf,zip|max:10240', // Maks 10MB
         ]);
 
         $generalKeys = [
