@@ -258,7 +258,43 @@
                         $title = $is_array ? $item['title'] : $item;
                         $subitems = $is_array ? $item['subitems'] : [];
                     @endphp
-                    @if(empty($subitems))
+                    @if(str_contains($title, 'Produksi lainnya Item:'))
+                        @php
+                            $dynCount = $submission->form_data['q_'.$index.'_dynamic_count'] ?? 0;
+                        @endphp
+                        <tr>
+                            <td class="text-center">{{ $index + 1 }}</td>
+                            <td colspan="4" class="text-bold">Produksi lainnya:</td>
+                        </tr>
+                        @if($dynCount > 0)
+                            @for($d = 0; $d < $dynCount; $d++)
+                                @php
+                                    $d_item = $submission->form_data['q_'.$index.'_dynamic_'.$d.'_item'] ?? '';
+                                    $d_qty = $submission->form_data['q_'.$index.'_dynamic_'.$d.'_qty'] ?? '';
+                                    $d_spek = $submission->form_data['q_'.$index.'_dynamic_'.$d.'_spesifikasi'] ?? '';
+                                    $d_aktual = $submission->form_data['q_'.$index.'_dynamic_'.$d.'_aktual'] ?? '';
+                                    $d_status = $submission->form_data['q_'.$index.'_dynamic_'.$d.'_status'] ?? '';
+                                    $d_catatan = $submission->form_data['q_'.$index.'_dynamic_'.$d.'_catatan'] ?? '';
+                                @endphp
+                                <tr>
+                                    <td></td>
+                                    <td>- Item: {{ $d_item }}<br>  Qty: {{ $d_qty }}<br>  Spek: {{ $d_spek }}</td>
+                                    <td class="text-center">{{ $d_aktual }}</td>
+                                    <td class="text-center check-box" style="font-weight: normal;">
+                                        [{{ $d_status == 'S' ? 'X' : ' ' }}] S <br>
+                                        [{{ $d_status == 'TS' ? 'X' : ' ' }}] TS <br>
+                                        [{{ $d_status == 'N/A' ? 'X' : ' ' }}] N/A
+                                    </td>
+                                    <td>{{ $d_catatan }}</td>
+                                </tr>
+                            @endfor
+                        @else
+                            <tr>
+                                <td></td>
+                                <td colspan="4" class="text-center text-gray-500">- Tidak ada item tambahan -</td>
+                            </tr>
+                        @endif
+                    @elseif(empty($subitems))
                         @php
                             $aktual = $submission->form_data['q_'.$index.'_aktual'] ?? '';
                             $status = $submission->form_data['q_'.$index.'_status'] ?? '';

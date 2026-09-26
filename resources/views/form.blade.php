@@ -91,7 +91,13 @@
                                 </div>
                             </div>
                         @else
-                            @if(empty($subitems))
+                            @if(str_contains($title, 'Produksi lainnya Item:'))
+                                <div id="dynamic_produksi_container_{{ $index }}">
+                                    <!-- Items injected here by JS -->
+                                </div>
+                                <button type="button" class="mt-3 text-xs bg-black text-white px-3 py-1.5 rounded hover:bg-gray-800 transition" onclick="addDynamicProduksi({{ $index }})">+ Tambah Produksi Lainnya</button>
+                                <input type="hidden" name="q_{{ $index }}_dynamic_count" id="q_{{ $index }}_dynamic_count" value="0">
+                            @elseif(empty($subitems))
                                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
                                     @if(str_starts_with($form_code, 'PRD'))
                                         <div>
@@ -808,6 +814,60 @@
         const previewContainer = container.querySelector('.file-preview-container');
         previewContainer.classList.add('hidden');
     }
+
+    function addDynamicProduksi(index) {
+        const container = document.getElementById('dynamic_produksi_container_' + index);
+        const countInput = document.getElementById('q_' + index + '_dynamic_count');
+        const currentIndex = parseInt(countInput.value);
+        
+        const html = `
+            <div class="border p-4 rounded-md bg-gray-50 border-gray-200 mt-3 relative" id="q_${index}_dynamic_row_${currentIndex}">
+                <button type="button" class="absolute top-2 right-2 text-red-500 font-bold hover:text-red-700" onclick="document.getElementById('q_${index}_dynamic_row_${currentIndex}').remove()">X</button>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Item Produksi Lainnya</label>
+                        <input type="text" name="q_${index}_dynamic_${currentIndex}_item" class="w-full border rounded-md p-1.5 text-xs bg-white border-gray-300 focus:border-black focus:ring-black" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Qty</label>
+                        <input type="text" name="q_${index}_dynamic_${currentIndex}_qty" class="w-full border rounded-md p-1.5 text-xs bg-white border-gray-300 focus:border-black focus:ring-black">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Spesifikasi</label>
+                        <input type="text" name="q_${index}_dynamic_${currentIndex}_spesifikasi" class="w-full border rounded-md p-1.5 text-xs bg-white border-gray-300 focus:border-black focus:ring-black">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Hasil Aktual / Qty</label>
+                        <input type="text" name="q_${index}_dynamic_${currentIndex}_aktual" placeholder="Cth: 1 Unit / Sesuai" class="w-full border rounded-md p-1.5 text-xs bg-white border-gray-300 focus:border-black focus:ring-black">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Status Mutu</label>
+                        <div class="flex space-x-2 text-xs">
+                            <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_${index}_dynamic_${currentIndex}_status" value="S" class="w-4 h-4 text-black form-radio border-gray-300 focus:ring-black" required> <span class="ml-1 font-bold text-black">S</span></label>
+                            <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_${index}_dynamic_${currentIndex}_status" value="TS" class="w-4 h-4 text-gray-800 form-radio border-gray-300 focus:ring-black"> <span class="ml-1 font-bold text-gray-800">TS</span></label>
+                            <label class="inline-flex items-center cursor-pointer"><input type="radio" name="q_${index}_dynamic_${currentIndex}_status" value="N/A" class="w-4 h-4 text-gray-500 form-radio border-gray-300 focus:ring-gray-500"> <span class="ml-1 font-bold text-gray-600">N/A</span></label>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Catatan / No. FT</label>
+                        <input type="text" name="q_${index}_dynamic_${currentIndex}_catatan" placeholder="Catatan atau rujukan FT-01..." class="w-full border rounded-md p-1.5 text-xs bg-white border-gray-300 focus:border-black focus:ring-black">
+                    </div>
+                </div>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', html);
+        countInput.value = currentIndex + 1;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const dynamicCounts = document.querySelectorAll('input[id$="_dynamic_count"]');
+        dynamicCounts.forEach(function(input) {
+            const index = input.id.split('_')[1];
+            addDynamicProduksi(index);
+        });
+    });
 </script>
 @endpush
 
