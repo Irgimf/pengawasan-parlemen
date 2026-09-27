@@ -75,7 +75,7 @@
             <tbody class="divide-y divide-gray-100">
                 @forelse($submissions as $sub)
                 <tr class="bg-white hover:bg-gray-50 transition-colors">
-                    <td class="px-6 py-4">{{ \Carbon\Carbon::parse($sub->created_at)->timezone('Asia/Jakarta')->format('d M Y H:i') }}</td>
+                    <td class="px-6 py-4">{{ \Carbon\Carbon::parse($sub->start_time)->timezone('Asia/Jakarta')->format('d M Y H:i') }}</td>
                     <td class="px-6 py-4 font-bold text-black">{{ $sub->form_code }}</td>
                     <td class="px-6 py-4">{{ $sub->supervisor_name }}</td>
                     <td class="px-6 py-4">{{ $sub->location }}</td>
@@ -120,5 +120,6 @@
     </div>
 </div>
 @endsection
+
 
 
