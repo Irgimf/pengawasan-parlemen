@@ -585,7 +585,7 @@
             </tr>
             <tr>
                 <td style="font-weight: bold;" class="bg-gray">Catatan akhir</td>
-                <td colspan="3" style="height: 30px; vertical-align: top;">{{ $submission->form_data['final_notes'] ?? '' }}</td>
+                <td colspan="3" style="height: 30px; vertical-align: top;">{{ $submission->final_notes ?? '' }}</td>
             </tr>
         </table>
 
