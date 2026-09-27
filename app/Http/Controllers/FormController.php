@@ -896,7 +896,7 @@ class FormController extends Controller
         $questions = $this->getFormQuestions($submission->form_code);
         
         // Generate PDF dari view 'pdf.blade.php'
-        $pdf = Pdf::loadView('pdf', compact('submission', 'questions'));
+        $pdf = Pdf::setOptions(['isRemoteEnabled' => true])->loadView('pdf', compact('submission', 'questions'));
         
         // Atur ukuran kertas ke A4 (Portrait)
         $pdf->setPaper('A4', 'portrait');
@@ -924,6 +924,7 @@ class FormController extends Controller
         return redirect()->route('home')->with('success', 'Data formulir pengawasan berhasil dihapus.');
     }
 }
+
 
 
 

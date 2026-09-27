@@ -1039,6 +1039,30 @@
         </table>
         <p style="margin: 0; font-size: 8px; font-style: italic; color: #777;">*Kolom Panitia/PPK digunakan bila diperlukan sesuai mekanisme administrasi kegiatan.</p>
     @endif
+    @php
+        $attachment = $submission->form_data["attachment_path"] ?? null;
+        $isImage = false;
+        $imagePath = "";
+        
+        if ($attachment) {
+            if (preg_match("/\.(jpg|jpeg|png|heic|heif)(\?.*)?$/i", $attachment) || str_contains($attachment, "image/upload")) {
+                $isImage = true;
+                if (str_starts_with($attachment, "http")) {
+                    $imagePath = $attachment;
+                } else {
+                    $imagePath = public_path($attachment); 
+                }
+            }
+        }
+    @endphp
 
+    @if($isImage && $imagePath)
+        <div style="page-break-before: always;"></div>
+        <div style="text-align: center;">
+            <h3 style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; margin-bottom: 20px; text-transform: uppercase;">Lampiran Dokumentasi - {{ $submission->form_code }}</h3>
+            <img src="{{ $imagePath }}" style="max-width: 90%; max-height: 800px; object-fit: contain; border: 1px solid #333; padding: 10px;">
+        </div>
+    @endif
 </body>
 </html>
+
