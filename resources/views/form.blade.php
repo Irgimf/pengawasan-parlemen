@@ -873,6 +873,9 @@
         });
     }
 
+
+
+
     // Edit Form Auto Populate
     const editData = {!! isset($submission) ? json_encode(array_merge($submission->toArray(), $submission->form_data ?? [])) : "null" !!};
     
@@ -900,10 +903,20 @@
             });
             
             // Populate signature canvases if they exist
-            if(editData.signature_supervisor && typeof pad1 !== "undefined" && editData.signature_supervisor.length > 50) pad1.fromDataURL(editData.signature_supervisor);
-            if(editData.signature_provider && typeof pad2 !== "undefined" && editData.signature_provider.length > 50) pad2.fromDataURL(editData.signature_provider);
-            if(editData.signature_committee && typeof pad3 !== "undefined" && editData.signature_committee.length > 50) pad3.fromDataURL(editData.signature_committee);
+            if(editData.signature_supervisor && typeof sigPadSupervisor !== "undefined" && editData.signature_supervisor.length > 50) sigPadSupervisor.fromDataURL(editData.signature_supervisor);
+            if(editData.signature_provider && typeof sigPadProvider !== "undefined" && editData.signature_provider.length > 50) sigPadProvider.fromDataURL(editData.signature_provider);
+            if(editData.signature_committee && typeof sigPadCommittee !== "undefined" && editData.signature_committee.length > 50) sigPadCommittee.fromDataURL(editData.signature_committee);
             
+            // Show existing attachment if it exists
+            if(editData.attachment_path) {
+                const uploadWrappers = document.querySelectorAll(".file-upload-wrapper");
+                uploadWrappers.forEach(wrapper => {
+                    const existingFileDiv = document.createElement("div");
+                    existingFileDiv.className = "mt-2 p-2 bg-green-50 border border-green-200 rounded-md text-xs text-green-800 flex items-center justify-between";
+                    existingFileDiv.innerHTML = `<span><strong>File Tersimpan:</strong> <a href="${editData.attachment_path}" target="_blank" class="underline hover:text-green-900">Lihat File</a></span> <span class="text-[10px] text-gray-500">(Biarkan kosong jika tidak ingin mengubah)</span>`;
+                    wrapper.appendChild(existingFileDiv);
+                });
+            }
         }, 500);
     }
 
@@ -949,6 +962,9 @@
         previewContainer.classList.add('hidden');
     }
 
+
+
+
     // Edit Form Auto Populate
     const editData = {!! isset($submission) ? json_encode(array_merge($submission->toArray(), $submission->form_data ?? [])) : "null" !!};
     
@@ -976,10 +992,20 @@
             });
             
             // Populate signature canvases if they exist
-            if(editData.signature_supervisor && typeof pad1 !== "undefined" && editData.signature_supervisor.length > 50) pad1.fromDataURL(editData.signature_supervisor);
-            if(editData.signature_provider && typeof pad2 !== "undefined" && editData.signature_provider.length > 50) pad2.fromDataURL(editData.signature_provider);
-            if(editData.signature_committee && typeof pad3 !== "undefined" && editData.signature_committee.length > 50) pad3.fromDataURL(editData.signature_committee);
+            if(editData.signature_supervisor && typeof sigPadSupervisor !== "undefined" && editData.signature_supervisor.length > 50) sigPadSupervisor.fromDataURL(editData.signature_supervisor);
+            if(editData.signature_provider && typeof sigPadProvider !== "undefined" && editData.signature_provider.length > 50) sigPadProvider.fromDataURL(editData.signature_provider);
+            if(editData.signature_committee && typeof sigPadCommittee !== "undefined" && editData.signature_committee.length > 50) sigPadCommittee.fromDataURL(editData.signature_committee);
             
+            // Show existing attachment if it exists
+            if(editData.attachment_path) {
+                const uploadWrappers = document.querySelectorAll(".file-upload-wrapper");
+                uploadWrappers.forEach(wrapper => {
+                    const existingFileDiv = document.createElement("div");
+                    existingFileDiv.className = "mt-2 p-2 bg-green-50 border border-green-200 rounded-md text-xs text-green-800 flex items-center justify-between";
+                    existingFileDiv.innerHTML = `<span><strong>File Tersimpan:</strong> <a href="${editData.attachment_path}" target="_blank" class="underline hover:text-green-900">Lihat File</a></span> <span class="text-[10px] text-gray-500">(Biarkan kosong jika tidak ingin mengubah)</span>`;
+                    wrapper.appendChild(existingFileDiv);
+                });
+            }
         }, 500);
     }
 
@@ -1102,6 +1128,9 @@
         previewContainer.classList.add('hidden');
     }
 
+
+
+
     // Edit Form Auto Populate
     const editData = {!! isset($submission) ? json_encode(array_merge($submission->toArray(), $submission->form_data ?? [])) : "null" !!};
     
@@ -1129,15 +1158,27 @@
             });
             
             // Populate signature canvases if they exist
-            if(editData.signature_supervisor && typeof pad1 !== "undefined" && editData.signature_supervisor.length > 50) pad1.fromDataURL(editData.signature_supervisor);
-            if(editData.signature_provider && typeof pad2 !== "undefined" && editData.signature_provider.length > 50) pad2.fromDataURL(editData.signature_provider);
-            if(editData.signature_committee && typeof pad3 !== "undefined" && editData.signature_committee.length > 50) pad3.fromDataURL(editData.signature_committee);
+            if(editData.signature_supervisor && typeof sigPadSupervisor !== "undefined" && editData.signature_supervisor.length > 50) sigPadSupervisor.fromDataURL(editData.signature_supervisor);
+            if(editData.signature_provider && typeof sigPadProvider !== "undefined" && editData.signature_provider.length > 50) sigPadProvider.fromDataURL(editData.signature_provider);
+            if(editData.signature_committee && typeof sigPadCommittee !== "undefined" && editData.signature_committee.length > 50) sigPadCommittee.fromDataURL(editData.signature_committee);
             
+            // Show existing attachment if it exists
+            if(editData.attachment_path) {
+                const uploadWrappers = document.querySelectorAll(".file-upload-wrapper");
+                uploadWrappers.forEach(wrapper => {
+                    const existingFileDiv = document.createElement("div");
+                    existingFileDiv.className = "mt-2 p-2 bg-green-50 border border-green-200 rounded-md text-xs text-green-800 flex items-center justify-between";
+                    existingFileDiv.innerHTML = `<span><strong>File Tersimpan:</strong> <a href="${editData.attachment_path}" target="_blank" class="underline hover:text-green-900">Lihat File</a></span> <span class="text-[10px] text-gray-500">(Biarkan kosong jika tidak ingin mengubah)</span>`;
+                    wrapper.appendChild(existingFileDiv);
+                });
+            }
         }, 500);
     }
 
 </script>
 @endpush
+
+
 
 
 
