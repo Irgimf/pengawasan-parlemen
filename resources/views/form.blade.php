@@ -266,10 +266,30 @@
                     </div>
                 </div>
 
+                
                 <div class="pt-4 border-t border-gray-200">
-                    <label class="block text-sm font-medium text-gray-700">Unggah File Dokumentasi (Opsional)</label>
-                    <input type="file" name="attachment" accept="image/*,video/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-black hover:file:bg-gray-200 border border-gray-300 rounded-md bg-white">
-                    <p class="mt-1 text-xs text-gray-500">Maksimal ukuran file 10 MB (JPG, PNG, MP4).</p>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Unggah File Dokumentasi (Opsional)</label>
+                    <div class="mt-2 file-upload-wrapper">
+                        <div class="flex flex-wrap gap-2 mb-2">
+                            <label class="cursor-pointer bg-black text-white py-1.5 px-3 rounded-md text-xs font-semibold hover:bg-gray-800 transition flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                Buka Kamera
+                                <input type="file" name="camera_attachment" accept="image/*,video/*" capture="environment" class="hidden file-upload-input" onchange="handleFileSelect(this, 'attachment')">
+                            </label>
+                            
+                            <label class="cursor-pointer bg-gray-200 text-black py-1.5 px-3 rounded-md text-xs font-semibold hover:bg-gray-300 transition flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+                                Pilih File
+                                <input type="file" name="attachment" accept="image/*,video/*" class="hidden file-upload-input" onchange="handleFileSelect(this, 'camera_attachment')">
+                            </label>
+                        </div>
+                    
+                        <div class="file-preview-container hidden flex items-center space-x-2 mt-2 p-2 bg-blue-50 border border-blue-100 rounded-md max-w-sm">
+                            <span class="file-name-label text-xs text-blue-800 font-medium truncate flex-1"></span>
+                            <button type="button" onclick="clearFileSelection(this)" class="text-red-500 hover:text-red-700 font-bold bg-white rounded-full w-5 h-5 flex items-center justify-center border border-red-200 shadow-sm">&times;</button>
+                        </div>
+                        <p class="mt-1 text-xs text-gray-500">Maks. 10 MB. Kamera untuk foto/video instan.</p>
+                    </div>
                 </div>
             </div>
 
@@ -428,10 +448,30 @@
                     </div>
                 </div>
 
+                
                 <div class="mt-4 pt-4 border-t border-gray-200">
-                    <label class="block text-sm font-medium text-gray-700">Unggah File Lampiran (Opsional)</label>
-                    <input type="file" name="attachment" accept=".jpg,.jpeg,.png,.mp4,.mov,.pdf,.zip" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-black hover:file:bg-gray-200 border border-gray-300 rounded-md bg-white">
-                    <p class="mt-1 text-xs text-gray-500">Maksimal ukuran file 10 MB (JPG, PNG, MP4, PDF, ZIP).</p>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Unggah File Lampiran (Opsional)</label>
+                    <div class="mt-2 file-upload-wrapper">
+                        <div class="flex flex-wrap gap-2 mb-2">
+                            <label class="cursor-pointer bg-black text-white py-1.5 px-3 rounded-md text-xs font-semibold hover:bg-gray-800 transition flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                Buka Kamera
+                                <input type="file" name="camera_attachment" accept="image/*,video/*" capture="environment" class="hidden file-upload-input" onchange="handleFileSelect(this, 'attachment')">
+                            </label>
+                            
+                            <label class="cursor-pointer bg-gray-200 text-black py-1.5 px-3 rounded-md text-xs font-semibold hover:bg-gray-300 transition flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+                                Pilih File
+                                <input type="file" name="attachment" accept=".jpg,.jpeg,.png,.mp4,.mov,.pdf,.zip" class="hidden file-upload-input" onchange="handleFileSelect(this, 'camera_attachment')">
+                            </label>
+                        </div>
+                    
+                        <div class="file-preview-container hidden flex items-center space-x-2 mt-2 p-2 bg-blue-50 border border-blue-100 rounded-md max-w-sm">
+                            <span class="file-name-label text-xs text-blue-800 font-medium truncate flex-1"></span>
+                            <button type="button" onclick="clearFileSelection(this)" class="text-red-500 hover:text-red-700 font-bold bg-white rounded-full w-5 h-5 flex items-center justify-center border border-red-200 shadow-sm">&times;</button>
+                        </div>
+                        <p class="mt-1 text-xs text-gray-500">Maks. 10 MB. Kamera untuk foto/video instan.</p>
+                    </div>
                 </div>
             </div>
 
@@ -539,10 +579,30 @@
                     </div>
                 </div>
 
+                
                 <div class="mt-4 pt-4 border-t border-gray-200">
-                    <label class="block text-sm font-medium text-gray-700">Unggah File Lampiran (Opsional)</label>
-                    <input type="file" name="attachment" accept=".jpg,.jpeg,.png,.mp4,.mov,.pdf,.zip" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-black hover:file:bg-gray-200 border border-gray-300 rounded-md bg-white">
-                    <p class="mt-1 text-xs text-gray-500">Maksimal ukuran file 10 MB (JPG, PNG, MP4, PDF, ZIP).</p>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Unggah File Lampiran (Opsional)</label>
+                    <div class="mt-2 file-upload-wrapper">
+                        <div class="flex flex-wrap gap-2 mb-2">
+                            <label class="cursor-pointer bg-black text-white py-1.5 px-3 rounded-md text-xs font-semibold hover:bg-gray-800 transition flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                Buka Kamera
+                                <input type="file" name="camera_attachment" accept="image/*,video/*" capture="environment" class="hidden file-upload-input" onchange="handleFileSelect(this, 'attachment')">
+                            </label>
+                            
+                            <label class="cursor-pointer bg-gray-200 text-black py-1.5 px-3 rounded-md text-xs font-semibold hover:bg-gray-300 transition flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+                                Pilih File
+                                <input type="file" name="attachment" accept=".jpg,.jpeg,.png,.mp4,.mov,.pdf,.zip" class="hidden file-upload-input" onchange="handleFileSelect(this, 'camera_attachment')">
+                            </label>
+                        </div>
+                    
+                        <div class="file-preview-container hidden flex items-center space-x-2 mt-2 p-2 bg-blue-50 border border-blue-100 rounded-md max-w-sm">
+                            <span class="file-name-label text-xs text-blue-800 font-medium truncate flex-1"></span>
+                            <button type="button" onclick="clearFileSelection(this)" class="text-red-500 hover:text-red-700 font-bold bg-white rounded-full w-5 h-5 flex items-center justify-center border border-red-200 shadow-sm">&times;</button>
+                        </div>
+                        <p class="mt-1 text-xs text-gray-500">Maks. 10 MB. Kamera untuk foto/video instan.</p>
+                    </div>
                 </div>
             </div>
 
@@ -569,10 +629,30 @@
                         <label class="inline-flex items-center cursor-pointer"><input type="radio" name="kondisi" value="Perbaikan" class="w-4 h-4 text-black form-radio"><span class="ml-2 text-sm">Perlu perbaikan segera</span></label>
                     </div>
                 </div>
+                
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700">Unggah File Dokumentasi (Opsional)</label>
-                    <input type="file" name="attachment" accept="image/*,video/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-black hover:file:bg-gray-200 border border-gray-300 rounded-md bg-white">
-                    <p class="mt-1 text-xs text-gray-500">Maksimal ukuran file 10 MB (JPG, PNG, MP4).</p>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Unggah File Dokumentasi (Opsional)</label>
+                    <div class="mt-2 file-upload-wrapper">
+                        <div class="flex flex-wrap gap-2 mb-2">
+                            <label class="cursor-pointer bg-black text-white py-1.5 px-3 rounded-md text-xs font-semibold hover:bg-gray-800 transition flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                Buka Kamera
+                                <input type="file" name="camera_attachment" accept="image/*,video/*" capture="environment" class="hidden file-upload-input" onchange="handleFileSelect(this, 'attachment')">
+                            </label>
+                            
+                            <label class="cursor-pointer bg-gray-200 text-black py-1.5 px-3 rounded-md text-xs font-semibold hover:bg-gray-300 transition flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+                                Pilih File
+                                <input type="file" name="attachment" accept="image/*,video/*" class="hidden file-upload-input" onchange="handleFileSelect(this, 'camera_attachment')">
+                            </label>
+                        </div>
+                    
+                        <div class="file-preview-container hidden flex items-center space-x-2 mt-2 p-2 bg-blue-50 border border-blue-100 rounded-md max-w-sm">
+                            <span class="file-name-label text-xs text-blue-800 font-medium truncate flex-1"></span>
+                            <button type="button" onclick="clearFileSelection(this)" class="text-red-500 hover:text-red-700 font-bold bg-white rounded-full w-5 h-5 flex items-center justify-center border border-red-200 shadow-sm">&times;</button>
+                        </div>
+                        <p class="mt-1 text-xs text-gray-500">Maks. 10 MB. Kamera untuk foto/video instan.</p>
+                    </div>
                 </div>
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700">No. File Dokumentasi (Foto/Video)</label>
@@ -787,7 +867,47 @@
 </script>
 @endpush
 
+
 @endsection
+
+@push('scripts')
+<script>
+    function handleFileSelect(input, otherInputName) {
+        const container = input.closest('.mt-2');
+        const previewContainer = container.querySelector('.file-preview-container');
+        const nameLabel = container.querySelector('.file-name-label');
+        const otherInput = container.querySelector(`input[name="${otherInputName}"]`);
+        
+        if (input.files && input.files.length > 0) {
+            const file = input.files[0];
+            // 419 Page Expired prevention: check file size client-side (10MB limit)
+            const maxSize = 10 * 1024 * 1024; // 10MB
+            if (file.size > maxSize) {
+                alert(`Error: Ukuran file terlalu besar (${(file.size / (1024*1024)).toFixed(2)} MB).\n\nMaksimal 10 MB. Hal ini dapat menyebabkan Error 419 Page Expired.\nSilakan kompres foto/video Anda atau turunkan resolusi kamera HP Anda sebelum mengunggah.`);
+                input.value = '';
+                previewContainer.classList.add('hidden');
+                return;
+            }
+
+            nameLabel.textContent = file.name;
+            previewContainer.classList.remove('hidden');
+            if(otherInput) otherInput.value = ''; 
+        } else {
+            previewContainer.classList.add('hidden');
+        }
+    }
+
+    function clearFileSelection(btn) {
+        const container = btn.closest('.mt-2');
+        const inputs = container.querySelectorAll('.file-upload-input');
+        inputs.forEach(input => input.value = '');
+        
+        const previewContainer = container.querySelector('.file-preview-container');
+        previewContainer.classList.add('hidden');
+    }
+</script>
+@endpush
+
 
 @push('scripts')
 <script>
@@ -868,6 +988,43 @@
             addDynamicProduksi(index);
         });
     });
+
+    // File Upload Handling & Size Validation
+    function handleFileSelect(input, otherInputName) {
+        const container = input.closest('.file-upload-wrapper');
+        const previewContainer = container.querySelector('.file-preview-container');
+        const nameLabel = container.querySelector('.file-name-label');
+        const otherInput = container.querySelector(`input[name="${otherInputName}"]`);
+        
+        if (input.files && input.files.length > 0) {
+            const file = input.files[0];
+            const maxSize = 10 * 1024 * 1024; // 10MB
+            
+            if (file.size > maxSize) {
+                alert(`Error: Ukuran file terlalu besar (${(file.size / (1024*1024)).toFixed(2)} MB).\n\nMaksimal 10 MB. Hal ini dapat menyebabkan error 419 Page Expired (Gagal Upload).\nSilakan kompres file, atau turunkan resolusi kamera HP Anda (di Pengaturan Kamera > Format/Resolusi).`);
+                input.value = '';
+                previewContainer.classList.add('hidden');
+                return;
+            }
+
+            nameLabel.textContent = file.name;
+            previewContainer.classList.remove('hidden');
+            if(otherInput) otherInput.value = ''; 
+        } else {
+            previewContainer.classList.add('hidden');
+        }
+    }
+
+    function clearFileSelection(btn) {
+        const container = btn.closest('.file-upload-wrapper');
+        const inputs = container.querySelectorAll('.file-upload-input');
+        inputs.forEach(input => input.value = '');
+        
+        const previewContainer = container.querySelector('.file-preview-container');
+        previewContainer.classList.add('hidden');
+    }
 </script>
 @endpush
+
+
 
