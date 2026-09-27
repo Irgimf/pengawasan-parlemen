@@ -748,8 +748,29 @@ class FormController extends Controller
     {
         $submission = Submission::findOrFail($id);
         $form_code = $submission->form_code;
-        $form_name = $this->getFormName($form_code);
         $questions = $this->getFormQuestions($form_code);
+        
+        $form_name = "";
+        $kategoriForm = [
+            ["code" => "RHP-00", "name" => "Rekap Harian Konsultan Pengawas"],
+            ["code" => "KKH-01-BANDARA", "name" => "Bandara Soekarno-Hatta"],
+            ["code" => "KKH-02-HOTEL", "name" => "Hotel - Foyer & Meeting Ballroom"],
+            ["code" => "KKH-03-DPRRI", "name" => "DPR RI - Pustakaloka/Nusantara"],
+            ["code" => "KKH-04-TRANSPORT", "name" => "Transportasi Darat"],
+            ["code" => "PRD-01A", "name" => "Panggung/Rigging (Bandara)"],
+            ["code" => "PRD-01B", "name" => "Genset (Bandara)"],
+            ["code" => "PRD-02A", "name" => "Panggung/Rigging/Videotron (Hotel)"],
+            ["code" => "PRD-02B", "name" => "Sound/Lighting/Genset (Hotel)"],
+            ["code" => "PRD-03", "name" => "Produksi/Event/Dekorasi (DPR RI)"],
+            ["code" => "FT-01", "name" => "Form Temuan & Ketidaksesuaian"],
+            ["code" => "BA-TL-01", "name" => "Berita Acara Tindak Lanjut"]
+        ];
+        
+        foreach($kategoriForm as $form) {
+            if($form["code"] == $form_code) {
+                $form_name = $form["name"];
+            }
+        }
         
         return view("form", [
             "form_code" => $form_code,
@@ -854,4 +875,6 @@ class FormController extends Controller
         return redirect()->route('home')->with('success', 'Data formulir pengawasan berhasil dihapus.');
     }
 }
+
+
 
