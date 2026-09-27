@@ -69,8 +69,8 @@ class FormController extends Controller
             'location' => 'nullable|string|max:255',
             'start_time' => 'required|date',
             'signature_supervisor' => 'required|string',
-            'attachment' => 'nullable|file|mimes:jpeg,png,jpg,mp4,mov,pdf,zip|max:10240', // Maks 10MB
-            'camera_attachment' => 'nullable|file|mimes:jpeg,png,jpg,mp4,mov|max:10240', // Maks 10MB
+            'attachment' => 'nullable|file|mimes:jpeg,png,jpg,mp4,mov,pdf,zip,heic,heif|max:10240', // Maks 10MB
+            'camera_attachment' => 'nullable|file|mimes:jpeg,png,jpg,mp4,mov,heic,heif|max:10240', // Maks 10MB
         ]);
 
         $generalKeys = [
@@ -741,6 +741,99 @@ class FormController extends Controller
         ];
 
         return $library[$code] ?? [];
+    }
+
+
+    public function edit($id)
+    {
+        $submission = Submission::findOrFail($id);
+        
+        $formName = "";
+        $kategoriForm = [
+            ["code" => "RHP-00", "name" => "Rekap Harian Konsultan Pengawas"],
+            ["code" => "KKH-01-BANDARA", "name" => "Bandara Soekarno-Hatta"],
+            ["code" => "KKH-02-HOTEL", "name" => "Hotel - Foyer & Meeting Ballroom"],
+            ["code" => "KKH-03-DPRRI", "name" => "DPR RI - Pustakaloka/Nusantara"],
+            ["code" => "KKH-04-TRANSPORT", "name" => "Transportasi Darat"],
+            ["code" => "PRD-01A", "name" => "Panggung/Rigging (Bandara)"],
+            ["code" => "PRD-01B", "name" => "Genset (Bandara)"],
+            ["code" => "PRD-02A", "name" => "Panggung/Rigging/Videotron (Hotel)"],
+            ["code" => "PRD-02B", "name" => "Sound/Lighting/Genset (Hotel)"],
+            ["code" => "PRD-03", "name" => "Produksi/Event/Dekorasi (DPR RI)"],
+            ["code" => "FT-01", "name" => "Form Temuan & Ketidaksesuaian"],
+            ["code" => "BA-TL-01", "name" => "Berita Acara Tindak Lanjut"]
+        ];
+        
+        foreach($kategoriForm as $form) {
+            if($form["code"] == $submission->form_code) {
+                $formName = $form["name"];
+            }
+        }
+        
+        return view("form", [
+            "formCode" => $submission->form_code,
+            "formName" => $formName,
+            "submission" => $submission
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $submission = Submission::findOrFail($id);
+        
+        $request->validate([
+            "supervisor_name" => "required|string|max:255",
+            "location" => "nullable|string|max:255",
+            "start_time" => "required|date",
+            "attachment" => "nullable|file|mimes:jpeg,png,jpg,mp4,mov,pdf,zip,heic,heif|max:10240",
+            "camera_attachment" => "nullable|file|mimes:jpeg,png,jpg,mp4,mov,heic,heif|max:10240",
+        ]);
+
+        $generalKeys = [
+            "_token", "_method", "supervisor_name", "provider_name", "committee_name", 
+            "location", "start_time", "end_time", "final_notes",
+            "signature_supervisor", "signature_provider", "signature_committee", "attachment", "camera_attachment"
+        ];
+        
+        $formData = $request->except($generalKeys);
+
+        // Keep old attachment if no new file is uploaded
+        $formData["attachment_path"] = $submission->form_data["attachment_path"] ?? null;
+
+        $file = null;
+        if ($request->hasFile("camera_attachment")) {
+            $file = $request->file("camera_attachment");
+        } elseif ($request->hasFile("attachment")) {
+            $file = $request->file("attachment");
+        }
+
+        if ($file) {
+            if (env("CLOUDINARY_URL")) {
+                $path = $file->store("dokumentasi", "cloudinary");
+                $uploadedFileUrl = \Illuminate\Support\Facades\Storage::disk("cloudinary")->url($path);
+                $formData["attachment_path"] = $uploadedFileUrl;
+            } else {
+                $filename = time() . "_" . $file->getClientOriginalName();
+                $path = $file->storeAs("dokumentasi", $filename, "public");
+                $formData["attachment_path"] = "storage/" . $path;
+            }
+        }
+
+        $submission->update([
+            "supervisor_name" => $request->supervisor_name,
+            "provider_name" => $request->provider_name,
+            "committee_name" => $request->committee_name,
+            "location" => $request->location,
+            "start_time" => $request->start_time,
+            "end_time" => $request->end_time,
+            "final_notes" => $request->final_notes,
+            "signature_supervisor" => $request->signature_supervisor ?: $submission->signature_supervisor,
+            "signature_provider" => $request->signature_provider ?: $submission->signature_provider,
+            "signature_committee" => $request->signature_committee ?: $submission->signature_committee,
+            "form_data" => $formData,
+        ]);
+
+        return redirect()->route("home")->with("success", "Formulir " . $submission->form_code . " berhasil diupdate!");
     }
 
     public function exportPdf($id)

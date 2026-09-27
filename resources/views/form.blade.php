@@ -4,8 +4,16 @@
 <div class="max-w-5xl mx-auto bg-white p-8 rounded-lg shadow-md border border-gray-200">
     <h2 class="text-3xl font-bold text-gray-800 mb-2 border-b pb-4">Pengisian Form: {{ $form_code }}</h2>
 
-    <form id="pengawasanForm" method="POST" action="{{ route('form.store', $form_code) }}" enctype="multipart/form-data">
+    
+    <form id="pengawasanForm" method="POST" action="{{ isset($submission) ? route('form.update', $submission->id) : route('form.store', $form_code) }}" enctype="multipart/form-data">
         @csrf
+        @if(isset($submission))
+            @method('PUT')
+        @endif
+        @if(isset($submission))
+            @method('PUT')
+        @endif
+
         
         <!-- BLOK 1: METADATA & PIHAK TERLIBAT -->
         <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-8">
@@ -864,6 +872,41 @@
             rtIndex++;
         });
     }
+
+    // Edit Form Auto Populate
+    const editData = {!! isset($submission) ? json_encode(array_merge($submission->toArray(), $submission->form_data ?? [])) : "null" !!};
+    
+    if (editData) {
+        // Populating standard and form_data fields
+        Object.keys(editData).forEach(key => {
+            const input = document.querySelector(`[name="${key}"]`);
+            if (input) {
+                if (input.type === "radio" || input.type === "checkbox") {
+                    const checkInput = document.querySelector(`[name="${key}"][value="${editData[key]}"]`);
+                    if(checkInput) checkInput.checked = true;
+                } else if (input.type !== "file") {
+                    input.value = editData[key];
+                }
+            }
+        });
+
+        // Specific delay to populate dynamic inputs after they are generated
+        setTimeout(() => {
+            Object.keys(editData).forEach(key => {
+                if (key.includes("_dynamic_")) {
+                    const input = document.querySelector(`[name="${key}"]`);
+                    if (input) input.value = editData[key];
+                }
+            });
+            
+            // Populate signature canvases if they exist
+            if(editData.signature_supervisor && typeof pad1 !== "undefined" && editData.signature_supervisor.length > 50) pad1.fromDataURL(editData.signature_supervisor);
+            if(editData.signature_provider && typeof pad2 !== "undefined" && editData.signature_provider.length > 50) pad2.fromDataURL(editData.signature_provider);
+            if(editData.signature_committee && typeof pad3 !== "undefined" && editData.signature_committee.length > 50) pad3.fromDataURL(editData.signature_committee);
+            
+        }, 500);
+    }
+
 </script>
 @endpush
 
@@ -905,6 +948,41 @@
         const previewContainer = container.querySelector('.file-preview-container');
         previewContainer.classList.add('hidden');
     }
+
+    // Edit Form Auto Populate
+    const editData = {!! isset($submission) ? json_encode(array_merge($submission->toArray(), $submission->form_data ?? [])) : "null" !!};
+    
+    if (editData) {
+        // Populating standard and form_data fields
+        Object.keys(editData).forEach(key => {
+            const input = document.querySelector(`[name="${key}"]`);
+            if (input) {
+                if (input.type === "radio" || input.type === "checkbox") {
+                    const checkInput = document.querySelector(`[name="${key}"][value="${editData[key]}"]`);
+                    if(checkInput) checkInput.checked = true;
+                } else if (input.type !== "file") {
+                    input.value = editData[key];
+                }
+            }
+        });
+
+        // Specific delay to populate dynamic inputs after they are generated
+        setTimeout(() => {
+            Object.keys(editData).forEach(key => {
+                if (key.includes("_dynamic_")) {
+                    const input = document.querySelector(`[name="${key}"]`);
+                    if (input) input.value = editData[key];
+                }
+            });
+            
+            // Populate signature canvases if they exist
+            if(editData.signature_supervisor && typeof pad1 !== "undefined" && editData.signature_supervisor.length > 50) pad1.fromDataURL(editData.signature_supervisor);
+            if(editData.signature_provider && typeof pad2 !== "undefined" && editData.signature_provider.length > 50) pad2.fromDataURL(editData.signature_provider);
+            if(editData.signature_committee && typeof pad3 !== "undefined" && editData.signature_committee.length > 50) pad3.fromDataURL(editData.signature_committee);
+            
+        }, 500);
+    }
+
 </script>
 @endpush
 
@@ -1023,8 +1101,47 @@
         const previewContainer = container.querySelector('.file-preview-container');
         previewContainer.classList.add('hidden');
     }
+
+    // Edit Form Auto Populate
+    const editData = {!! isset($submission) ? json_encode(array_merge($submission->toArray(), $submission->form_data ?? [])) : "null" !!};
+    
+    if (editData) {
+        // Populating standard and form_data fields
+        Object.keys(editData).forEach(key => {
+            const input = document.querySelector(`[name="${key}"]`);
+            if (input) {
+                if (input.type === "radio" || input.type === "checkbox") {
+                    const checkInput = document.querySelector(`[name="${key}"][value="${editData[key]}"]`);
+                    if(checkInput) checkInput.checked = true;
+                } else if (input.type !== "file") {
+                    input.value = editData[key];
+                }
+            }
+        });
+
+        // Specific delay to populate dynamic inputs after they are generated
+        setTimeout(() => {
+            Object.keys(editData).forEach(key => {
+                if (key.includes("_dynamic_")) {
+                    const input = document.querySelector(`[name="${key}"]`);
+                    if (input) input.value = editData[key];
+                }
+            });
+            
+            // Populate signature canvases if they exist
+            if(editData.signature_supervisor && typeof pad1 !== "undefined" && editData.signature_supervisor.length > 50) pad1.fromDataURL(editData.signature_supervisor);
+            if(editData.signature_provider && typeof pad2 !== "undefined" && editData.signature_provider.length > 50) pad2.fromDataURL(editData.signature_provider);
+            if(editData.signature_committee && typeof pad3 !== "undefined" && editData.signature_committee.length > 50) pad3.fromDataURL(editData.signature_committee);
+            
+        }, 500);
+    }
+
 </script>
 @endpush
+
+
+
+
 
 
 

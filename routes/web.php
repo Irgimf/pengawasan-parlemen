@@ -12,6 +12,10 @@ Route::get('/form/{form_code}', [FormController::class, 'show'])->name('form.sho
 // Proses Submit Form
 Route::post('/form/{form_code}', [FormController::class, 'store'])->name('form.store');
 
+// Form Edit
+Route::get('/form/edit/{id}', [FormController::class, 'edit'])->name('form.edit');
+Route::put('/form/update/{id}', [FormController::class, 'update'])->name('form.update');
+
 // Export PDF
 Route::get('/form/export/{id}', [FormController::class, 'exportPdf'])->name('form.pdf');
 
