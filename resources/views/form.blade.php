@@ -183,7 +183,17 @@
                             @endif
                         @endif
                     </div>
-                @endforeach            </div>
+                @endforeach
+                
+                <!-- CONTAINER FOR CUSTOM QUESTIONS -->
+                <div id="custom-questions-container" class="space-y-6 mt-6"></div>
+                
+                <div class="mt-4 flex justify-center">
+                    <button type="button" id="add-custom-question-btn" class="px-4 py-2 bg-gray-200 text-gray-800 text-xs font-bold rounded-md hover:bg-gray-300 transition">
+                        + Tambah Kriteria Pengawasan Lainnya
+                    </button>
+                </div>
+            </div>
         @elseif(!in_array($form_code, ['RT-01', 'FT-01', 'BA-TL-01']))
             <div class="mb-6 p-4 bg-yellow-50 rounded-md border border-yellow-200">
                 <p class="text-sm text-yellow-800">Daftar pertanyaan/pos/item untuk form ini belum dikonfigurasi.</p>
@@ -920,6 +930,67 @@
         }, 500);
     }
 
+
+    // Dynamic Row Handler untuk Custom Question KKH
+    const addCustomQuestionBtn = document.getElementById("add-custom-question-btn");
+    if (addCustomQuestionBtn) {
+        let customQuestionIndex = 0;
+        
+        window.addCustomQuestion = function(title = "", status = "", note = "") {
+            const container = document.getElementById("custom-questions-container");
+            const rowHTML = `
+                <div class="border-t pt-4 relative custom-question-row mt-4">
+                    <button type="button" onclick="this.parentElement.remove()" class="absolute top-4 right-2 text-gray-800 hover:text-red-800 text-xs font-bold bg-gray-200 px-2 py-1 rounded">Hapus Baris Tambahan Ini</button>
+                    <div class="mb-3 pr-40">
+                        <label class="block text-xs font-bold text-gray-800 mb-1">Objek / Kriteria Pengawasan (Tambahan Manual)</label>
+                        <input type="text" name="custom_q_${customQuestionIndex}_title" value="${title}" placeholder="Ketik kriteria pengawasan..." required class="w-full border rounded-md p-1.5 text-sm bg-white border-gray-300 focus:border-black focus:ring-black font-semibold text-black">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                        <div class="md:col-span-1">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Status Umum</label>
+                            <div class="flex space-x-3">
+                                <label class="inline-flex items-center cursor-pointer"><input type="radio" name="custom_q_${customQuestionIndex}_status" value="S" class="w-4 h-4 text-black form-radio border-gray-300 focus:ring-black" ${status==="S"?"checked":""} required> <span class="ml-1 text-xs font-bold text-black">S</span></label>
+                                <label class="inline-flex items-center cursor-pointer"><input type="radio" name="custom_q_${customQuestionIndex}_status" value="TS" class="w-4 h-4 text-gray-800 form-radio border-gray-300 focus:ring-black" ${status==="TS"?"checked":""}> <span class="ml-1 text-xs font-bold text-gray-800">TS</span></label>
+                                <label class="inline-flex items-center cursor-pointer"><input type="radio" name="custom_q_${customQuestionIndex}_status" value="N/A" class="w-4 h-4 text-gray-500 form-radio border-gray-300 focus:ring-gray-500" ${status==="N/A"?"checked":""}> <span class="ml-1 text-xs font-bold text-gray-600">N/A</span></label>
+                            </div>
+                        </div>
+                        <div class="md:col-span-3">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Catatan / No. Temuan</label>
+                            <input type="text" name="custom_q_${customQuestionIndex}_note" value="${note}" placeholder="Catatan atau keterangan..." class="w-full border rounded-md p-2 text-sm bg-white border-gray-300 focus:border-black focus:ring-black">
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML("beforeend", rowHTML);
+            customQuestionIndex++;
+        };
+        
+        addCustomQuestionBtn.addEventListener("click", () => window.addCustomQuestion());
+        
+        // Auto-populate for edit mode
+        if (typeof editData !== "undefined" && editData) {
+            let maxIndex = -1;
+            Object.keys(editData).forEach(key => {
+                const match = key.match(/^custom_q_(\d+)_title$/);
+                if (match) {
+                    const idx = parseInt(match[1]);
+                    if (idx > maxIndex) maxIndex = idx;
+                    
+                    // We must call it using a timeout to ensure it runs after DOM is ready
+                    setTimeout(() => {
+                        window.addCustomQuestion(
+                            editData[key], 
+                            editData[`custom_q_${idx}_status`] || "", 
+                            editData[`custom_q_${idx}_note`] || ""
+                        );
+                    }, 600);
+                }
+            });
+            setTimeout(() => {
+                customQuestionIndex = maxIndex + 1;
+            }, 700);
+        }
+    }
 </script>
 @endpush
 
@@ -1009,6 +1080,67 @@
         }, 500);
     }
 
+
+    // Dynamic Row Handler untuk Custom Question KKH
+    const addCustomQuestionBtn = document.getElementById("add-custom-question-btn");
+    if (addCustomQuestionBtn) {
+        let customQuestionIndex = 0;
+        
+        window.addCustomQuestion = function(title = "", status = "", note = "") {
+            const container = document.getElementById("custom-questions-container");
+            const rowHTML = `
+                <div class="border-t pt-4 relative custom-question-row mt-4">
+                    <button type="button" onclick="this.parentElement.remove()" class="absolute top-4 right-2 text-gray-800 hover:text-red-800 text-xs font-bold bg-gray-200 px-2 py-1 rounded">Hapus Baris Tambahan Ini</button>
+                    <div class="mb-3 pr-40">
+                        <label class="block text-xs font-bold text-gray-800 mb-1">Objek / Kriteria Pengawasan (Tambahan Manual)</label>
+                        <input type="text" name="custom_q_${customQuestionIndex}_title" value="${title}" placeholder="Ketik kriteria pengawasan..." required class="w-full border rounded-md p-1.5 text-sm bg-white border-gray-300 focus:border-black focus:ring-black font-semibold text-black">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                        <div class="md:col-span-1">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Status Umum</label>
+                            <div class="flex space-x-3">
+                                <label class="inline-flex items-center cursor-pointer"><input type="radio" name="custom_q_${customQuestionIndex}_status" value="S" class="w-4 h-4 text-black form-radio border-gray-300 focus:ring-black" ${status==="S"?"checked":""} required> <span class="ml-1 text-xs font-bold text-black">S</span></label>
+                                <label class="inline-flex items-center cursor-pointer"><input type="radio" name="custom_q_${customQuestionIndex}_status" value="TS" class="w-4 h-4 text-gray-800 form-radio border-gray-300 focus:ring-black" ${status==="TS"?"checked":""}> <span class="ml-1 text-xs font-bold text-gray-800">TS</span></label>
+                                <label class="inline-flex items-center cursor-pointer"><input type="radio" name="custom_q_${customQuestionIndex}_status" value="N/A" class="w-4 h-4 text-gray-500 form-radio border-gray-300 focus:ring-gray-500" ${status==="N/A"?"checked":""}> <span class="ml-1 text-xs font-bold text-gray-600">N/A</span></label>
+                            </div>
+                        </div>
+                        <div class="md:col-span-3">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Catatan / No. Temuan</label>
+                            <input type="text" name="custom_q_${customQuestionIndex}_note" value="${note}" placeholder="Catatan atau keterangan..." class="w-full border rounded-md p-2 text-sm bg-white border-gray-300 focus:border-black focus:ring-black">
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML("beforeend", rowHTML);
+            customQuestionIndex++;
+        };
+        
+        addCustomQuestionBtn.addEventListener("click", () => window.addCustomQuestion());
+        
+        // Auto-populate for edit mode
+        if (typeof editData !== "undefined" && editData) {
+            let maxIndex = -1;
+            Object.keys(editData).forEach(key => {
+                const match = key.match(/^custom_q_(\d+)_title$/);
+                if (match) {
+                    const idx = parseInt(match[1]);
+                    if (idx > maxIndex) maxIndex = idx;
+                    
+                    // We must call it using a timeout to ensure it runs after DOM is ready
+                    setTimeout(() => {
+                        window.addCustomQuestion(
+                            editData[key], 
+                            editData[`custom_q_${idx}_status`] || "", 
+                            editData[`custom_q_${idx}_note`] || ""
+                        );
+                    }, 600);
+                }
+            });
+            setTimeout(() => {
+                customQuestionIndex = maxIndex + 1;
+            }, 700);
+        }
+    }
 </script>
 @endpush
 
@@ -1175,8 +1307,73 @@
         }, 500);
     }
 
+
+    // Dynamic Row Handler untuk Custom Question KKH
+    const addCustomQuestionBtn = document.getElementById("add-custom-question-btn");
+    if (addCustomQuestionBtn) {
+        let customQuestionIndex = 0;
+        
+        window.addCustomQuestion = function(title = "", status = "", note = "") {
+            const container = document.getElementById("custom-questions-container");
+            const rowHTML = `
+                <div class="border-t pt-4 relative custom-question-row mt-4">
+                    <button type="button" onclick="this.parentElement.remove()" class="absolute top-4 right-2 text-gray-800 hover:text-red-800 text-xs font-bold bg-gray-200 px-2 py-1 rounded">Hapus Baris Tambahan Ini</button>
+                    <div class="mb-3 pr-40">
+                        <label class="block text-xs font-bold text-gray-800 mb-1">Objek / Kriteria Pengawasan (Tambahan Manual)</label>
+                        <input type="text" name="custom_q_${customQuestionIndex}_title" value="${title}" placeholder="Ketik kriteria pengawasan..." required class="w-full border rounded-md p-1.5 text-sm bg-white border-gray-300 focus:border-black focus:ring-black font-semibold text-black">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                        <div class="md:col-span-1">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Status Umum</label>
+                            <div class="flex space-x-3">
+                                <label class="inline-flex items-center cursor-pointer"><input type="radio" name="custom_q_${customQuestionIndex}_status" value="S" class="w-4 h-4 text-black form-radio border-gray-300 focus:ring-black" ${status==="S"?"checked":""} required> <span class="ml-1 text-xs font-bold text-black">S</span></label>
+                                <label class="inline-flex items-center cursor-pointer"><input type="radio" name="custom_q_${customQuestionIndex}_status" value="TS" class="w-4 h-4 text-gray-800 form-radio border-gray-300 focus:ring-black" ${status==="TS"?"checked":""}> <span class="ml-1 text-xs font-bold text-gray-800">TS</span></label>
+                                <label class="inline-flex items-center cursor-pointer"><input type="radio" name="custom_q_${customQuestionIndex}_status" value="N/A" class="w-4 h-4 text-gray-500 form-radio border-gray-300 focus:ring-gray-500" ${status==="N/A"?"checked":""}> <span class="ml-1 text-xs font-bold text-gray-600">N/A</span></label>
+                            </div>
+                        </div>
+                        <div class="md:col-span-3">
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Catatan / No. Temuan</label>
+                            <input type="text" name="custom_q_${customQuestionIndex}_note" value="${note}" placeholder="Catatan atau keterangan..." class="w-full border rounded-md p-2 text-sm bg-white border-gray-300 focus:border-black focus:ring-black">
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML("beforeend", rowHTML);
+            customQuestionIndex++;
+        };
+        
+        addCustomQuestionBtn.addEventListener("click", () => window.addCustomQuestion());
+        
+        // Auto-populate for edit mode
+        if (typeof editData !== "undefined" && editData) {
+            let maxIndex = -1;
+            Object.keys(editData).forEach(key => {
+                const match = key.match(/^custom_q_(\d+)_title$/);
+                if (match) {
+                    const idx = parseInt(match[1]);
+                    if (idx > maxIndex) maxIndex = idx;
+                    
+                    // We must call it using a timeout to ensure it runs after DOM is ready
+                    setTimeout(() => {
+                        window.addCustomQuestion(
+                            editData[key], 
+                            editData[`custom_q_${idx}_status`] || "", 
+                            editData[`custom_q_${idx}_note`] || ""
+                        );
+                    }, 600);
+                }
+            });
+            setTimeout(() => {
+                customQuestionIndex = maxIndex + 1;
+            }, 700);
+        }
+    }
 </script>
 @endpush
+
+
+
+
 
 
 

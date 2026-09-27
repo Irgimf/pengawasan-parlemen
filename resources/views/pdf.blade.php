@@ -531,6 +531,37 @@
                         @endforeach
                     @endif
                 @endforeach
+                
+                {{-- RENDER CUSTOM QUESTIONS --}}
+                @php
+                    $customQuestions = [];
+                    if(isset($submission->form_data) && is_array($submission->form_data)){
+                        foreach($submission->form_data as $key => $val) {
+                            if (preg_match('/^custom_q_(\d+)_title$/', $key, $matches)) {
+                                $idx = $matches[1];
+                                $customQuestions[$idx] = [
+                                    'title' => $val,
+                                    'status' => $submission->form_data['custom_q_'.$idx.'_status'] ?? '',
+                                    'note' => $submission->form_data['custom_q_'.$idx.'_note'] ?? '',
+                                ];
+                            }
+                        }
+                        ksort($customQuestions);
+                    }
+                    $lastIndex = isset($questions) ? count($questions) : 0;
+                @endphp
+                @foreach($customQuestions as $cq)
+                    <tr>
+                        <td class="col-no text-center">{{ $lastIndex + 1 }}</td>
+                        <td class="col-objek">{!! nl2br(e($cq['title'])) !!}</td>
+                        <td class="col-status text-center check-box" style="font-weight: normal; white-space: nowrap;">
+                            [{{ $cq['status'] == 'S' ? 'X' : ' ' }}] S &nbsp; [{{ $cq['status'] == 'TS' ? 'X' : ' ' }}] TS &nbsp; [{{ $cq['status'] == 'N/A' ? 'X' : ' ' }}] N/A
+                        </td>
+                        <td class="col-catatan">{{ $cq['note'] }}</td>
+                    </tr>
+                    @php $lastIndex++; @endphp
+                @endforeach
+                
             @else
                 <tr><td colspan="4" class="text-center"><em>Tidak ada kriteria ceklis yang ditemukan.</em></td></tr>
             @endif
