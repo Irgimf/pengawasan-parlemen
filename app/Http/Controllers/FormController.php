@@ -16,6 +16,7 @@ class FormController extends Controller
             ],
             'Kertas Kerja Harian (KKH)' => [
                 ['code' => 'KKH-01-BANDARA', 'name' => 'Bandara Soekarno-Hatta'],
+                ['code' => 'KKH-01B-STASIUN', 'name' => 'Stasiun KAI Gambir'],
                 ['code' => 'KKH-02-HOTEL', 'name' => 'Hotel - Foyer & Meeting Ballroom'],
                 ['code' => 'KKH-03-DPRRI', 'name' => 'DPR RI - Pustakaloka/Nusantara'],
                 ['code' => 'KKH-04-TRANSPORT', 'name' => 'Mobilitas / Transportasi Antar Lokasi'],
@@ -125,6 +126,53 @@ class FormController extends Controller
     {
         $library = [
             // ... (Pertanyaan KKH-01 sampai PRD-03 sebelumnya tetap ada di sini) ...
+                'KKH-01B-STASIUN' => [
+                    [
+                        'title' => 'Passenger service/ground handling dilaksanakan pada area penjemputan standar di luar pintu exit.',
+                        'subitems' => []
+                    ],
+                    [
+                        'title' => 'Kendaraan operasional stasiun:',
+                        'subitems' => [
+                            'Mini MPV min. tahun 2021',
+                            'AC',
+                            'GPS tracking',
+                            'Standar keamanan',
+                            'Standby 12 jam/hari',
+                            'Sudah termasuk supir, biaya tol, parkir, uang makan supir, dan bahan bakar',
+                            '1 unit',
+                        ]
+                    ],
+                    [
+                        'title' => 'Bis penjemputan peserta: Stasiun - Hotel; Fullday',
+                        'subitems' => [
+                            'Tahun 2020',
+                            'Kapasitas 59 seater (termasuk supir)',
+                            'Bahan bakar, biaya tol, dan parkir',
+                            'GPS tracking dan alat pengamanan standar (pemecah kaca, fire extenguiser dlsb)',
+                            '1 unit',
+                        ]
+                    ],
+                    [
+                        'title' => 'Proses kedatangan/penjemputan peserta dan pergerakan Stasiun-Hotel terlaksana sesuai daftar/jadwal panitia.',
+                        'subitems' => []
+                    ],
+                    [
+                        'title' => 'Konsumsi petugas stasiun tersedia sesuai kebutuhan:',
+                        'subitems' => [
+                            'Kedatangan: 25 pax makan siang/malam sesuai waktu',
+                            'Kepulangan: 25 pax makan siang/malam sesuai waktu',
+                        ]
+                    ],
+                    [
+                        'title' => 'Koordinasi ground handling, pengemudi dan transportasi berjalan; kendala peserta/kendaraan segera ditindaklanjuti.',
+                        'subitems' => []
+                    ],
+                    [
+                        'title' => 'Dokumentasi kondisi lapangan/kejadian penting tersedia sebagai bukti pengawasan.',
+                        'subitems' => []
+                    ],
+                ],
                 'KKH-01-BANDARA' => [
         [
             'title' => 'Airport service assistance/ground handling dilaksanakan pada area penjemputan standar di luar pintu exit.',
@@ -754,6 +802,7 @@ class FormController extends Controller
         $kategoriForm = [
             ["code" => "RHP-00", "name" => "Rekap Harian Konsultan Pengawas"],
             ["code" => "KKH-01-BANDARA", "name" => "Bandara Soekarno-Hatta"],
+            ["code" => "KKH-01B-STASIUN", "name" => "Stasiun KAI Gambir"],
             ["code" => "KKH-02-HOTEL", "name" => "Hotel - Foyer & Meeting Ballroom"],
             ["code" => "KKH-03-DPRRI", "name" => "DPR RI - Pustakaloka/Nusantara"],
             ["code" => "KKH-04-TRANSPORT", "name" => "Transportasi Darat"],
@@ -875,6 +924,7 @@ class FormController extends Controller
         return redirect()->route('home')->with('success', 'Data formulir pengawasan berhasil dihapus.');
     }
 }
+
 
 
 
